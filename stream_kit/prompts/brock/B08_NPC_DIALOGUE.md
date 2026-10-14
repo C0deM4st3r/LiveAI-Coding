@@ -7,8 +7,8 @@ See [model guidance](MODEL_GUIDANCE.md).
 Status: NPC implementation prompt; named identity requires its own verified evidence.
 Dependencies: B00–B06 plus B07a/b. Playable order: R3.
 Hosted semantics remain optional until B13; no inventory/battle dependency.
-LAB reuse, if present: NPC/native text tools and canonical entity/knowledge memory.
-STREAM builds one reusable interaction tool, not one player class per NPC.
+Build one reusable interaction tool over B03 entities and B07 native UI/text,
+not one player class per NPC. Create canonical knowledge records in this stage.
 Non-NPC world-object/choice interaction belongs to B07b's shared interactable tool;
 reuse its UI primitives without inventing an NPC identity for a starter object.
 
@@ -74,9 +74,9 @@ retrieval first. Return reliability and evidence references, not flattened truth
 Subsequent B13 can improve inference/retrieval without changing proof authority.
 No model or NPC text may change code, tools, priorities or verifier registration.
 
-LAB: preserve any reviewed interaction trials and original source data; widen only
-through tested adapter profiles. STREAM omits Mom-specific orchestration and keeps
-Mom as a reviewed identity fixture inside the general entity/interaction contract.
+Widen native coverage only through tested adapter profiles. A household NPC such
+as Mom is an identity case inside the general entity/interaction contract, not
+separate orchestration. Acquire scoped evidence in this build before claiming identity.
 Propagate B05 modes; evaluation writes go to the episode overlay, not training facts.
 Feed meaningful approach/open/choice/closure and one-line new knowledge summaries.
 No per-page screenshots or repeated full transcripts on the action overlay.

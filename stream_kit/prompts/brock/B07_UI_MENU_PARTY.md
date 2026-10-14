@@ -8,8 +8,8 @@ Status: UI implementation prompt; build and validate only the requested slice.
 **B07a dependencies: B00–B04. B07b dependencies: B00–B06 plus B07a.**
 Request exactly one slice. Apply the common contracts and that slice's work/gate;
 do not implement B07b automatically when building B07a at the first Oak event.
-LAB inventories and reuses verified UI/team/recovery tools if present. STREAM
-builds the final interfaces directly, without a starter-specific runner.
+Build the final UI interfaces over B02 perception and B03 recovery, without a
+starter-specific runner. Earlier slices' tested readers remain canonical.
 
 ## Common copy-ready contract
 
@@ -56,7 +56,7 @@ before navigation or new strategy planning. Reuse the same saved world store.
 
 Provide typed event/control-release validators with scoped native evidence.
 They can later support reusable goal rules, but “Oak:” text alone does not prove
-starter acquisition, lab pose or an entire objective. An Oak fixture may identify
+starter acquisition, laboratory pose or an entire objective. An Oak fixture may identify
 a covered event profile; it must not encode an unconditional button route.
 
 Test no presses/map writes in motion, settled text versus animation, unknown choice,
@@ -110,8 +110,7 @@ from safely closed/localized world handback. No party screen alone completes
 NPC/battle/major goals. Stale/partial team snapshots cannot clear healing blockers.
 Keep manual blockers and prior snapshots. No game RAM/save-file parsing.
 
-LAB adds tested profiles beside old callers through adapters with unchanged older
-proof semantics. STREAM uses this ownership layer from its first menu/object;
+Use this ownership layer from the first menu/object;
 NPC/battle/director add tools without replacing it. Evaluation observations go only
 to the fresh episode overlay, never frozen training memory.
 

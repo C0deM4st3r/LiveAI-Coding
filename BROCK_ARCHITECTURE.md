@@ -48,7 +48,7 @@ flowchart LR
   Metrics --> Feed
 ```
 
-B00 defines isolated LAB/STREAM profiles, canonical IDs, versioned interfaces,
+B00 defines isolated runtime/experiment profiles, canonical IDs, versioned interfaces,
 storage/evidence ownership and event contracts. It applies to every box. SQLite
 remains the persistence layer; there is one spatial map and one goal lifecycle.
 “Memory” is a shared service, not a second independent coordinate system.
@@ -106,16 +106,14 @@ Deterministic A*, menu selection and safety constraints remain useful executors.
 Do not turn perception uncertainty into a guessed position, tactical loss or
 learning reward. More repetitions of a broken controller are not useful training.
 
-## LAB to STREAM
+## From fresh checkout to evaluated player
 
-An existing LAB preserves its components while target adapters replace one
-supported path at a time. Each stage gets a versioned offline/live receipt.
-For the maintainer's stream, first pass the B16 LAB release gate, then rebuild
-the proven architecture from this starter's validated prompts on stream. The
-public starter contains no private LAB code or learned data. Record new code,
-schema, configuration and fixture hashes and verify each generated stage again.
-Public builders can test their own implementation independently. New runtime
-data stays separate. Manifest/profile tooling is implemented in B00/B16.
+Begin with the supplied overlays and create the gameplay code through the guides.
+Each stage uses the tested interfaces built in its preceding stages and records
+a versioned offline/live receipt. Record code, schema, configuration and fixture
+hashes, and verify each capability in this workspace. Keep training, evaluation
+and ordinary execution data isolated as defined by B00/B05. B16 evaluates this
+completed player and records its release manifest using this build's evidence.
 
 The clean build starts with these final interfaces and adds capabilities behind
 them. It does not replay historical screenshots-only policies, stacked planners,

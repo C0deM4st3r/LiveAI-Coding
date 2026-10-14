@@ -8,12 +8,12 @@ Status: provider/knowledge implementation prompt; no model access or quality is 
 Dependencies: B00–B08. Playable order: supporting R4, before the first battle.
 Bag, battle, capture and named travel are optional unavailable catalog entries
 until their own stages pass; none is a dependency for this provider interface.
-Reuse inventoried providers/caches if present and the canonical knowledge memory.
-STREAM builds one provider-independent interface, not successive temporary brains.
+Build one provider-independent interface over B08's canonical knowledge memory,
+not successive temporary brains. No provider account, model or cache is supplied.
 
 ## Copy-ready implementation prompt
 
-Consolidate semantic observation and external advice behind typed provider ports.
+Implement semantic observation and external advice behind typed provider ports.
 Keep perception/native proof separate from model interpretation. Pretrained model
 weights remain unchanged; experience and policy learning are B05/B11 responsibilities.
 Neither a larger model nor valid JSON establishes correct objects or map coordinates.
@@ -55,7 +55,7 @@ capability and knowledge versions. Return provenance and age on cache hits; neve
 create a new source image for a hit. Old compatible advice stays readable but
 must be revalidated for changed team, resources, tools and unresolved assumptions.
 
-Extend existing lexical/structured retrieval before adding a vector service.
+Extend B08's lexical/structured retrieval before adding a vector service.
 Query by current major goal, active step, entity/place, relevant team/mechanics and
 failure class. Return bounded facts with source/reliability/contradiction scope,
 not entire run history. External game knowledge supports strategy, never current
@@ -72,8 +72,7 @@ Retain native frames in RAM, compact facts/prototypes in canonical SQLite, lates
 Evicted references display text instead of blank thumbnails. No per-frame archives,
 full prompt dumps on stream or model-generated coordinates as walked tiles.
 
-LAB preserves any tested adapter behavior and owned-process cleanup. STREAM
-implements the final port and chosen backend directly. If a provider supports
+Implement the final port and chosen backend directly. If a provider supports
 tools/workspaces, disable tools and use an empty owned workspace for interpretation;
 manage only processes created by this adapter. Hosted calls still require the
 operator's applicable data-scope authorization; this prompt does not grant it.

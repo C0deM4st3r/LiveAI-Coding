@@ -16,21 +16,21 @@ Learning must change a versioned policy from measured outcomes; persistent maps
 and pretrained-model advice are valuable but are not that policy training.
 The public starter contains prompts, guides and presentation code only. No gameplay
 implementation, learned policy, recorded game fixture or live success is included.
-Inventory the selected workspace before claiming any capability or passed gate.
+Begin from a fresh checkout of this starter. Inventory its presentation files;
+create gameplay components in the stages below and claim only gates actually passed.
 
-## Choose the implementation context explicitly
+## Start the implementation in this workspace
 
-- LAB means an existing private testing workspace, if supplied: preserve source,
-  policies, shared maps, proofs, failed attempts and game files. Adapt verified
-  components behind the target interfaces; do not start parallel world memories.
-- STREAM means a separate clean checkout/profile built in the index's R0–R10
-  playable order. Implement the final interfaces directly, not historical one-off runners,
+- Build this clean checkout in the index's R0–R10 playable order. Implement the
+  final interfaces directly, not one-off runners,
   hardcoded room macros or screenshot-hash Q policies that later get replaced.
 - Profile configuration resolves absolute owned runtime/data/bridge paths before
-  any mutation. LAB and STREAM cannot share writable DBs, checkpoints or bridge
-  mailboxes. An active emulator still has exactly one controller across profiles.
-- Reusable approved assets/code may be copied with provenance. Learned memory is
-  imported only through an explicit reviewed snapshot; no automatic hidden import.
+  any mutation. Training, evaluation and execution profiles must isolate writable
+  stores and bridge mailboxes. An active emulator has exactly one controller across
+  profiles. Evaluation snapshots and per-episode overlays are defined in B05.
+- The supplied panels contain no trained agent, learned map or game evidence.
+  Create these through the implementation and authorized observations; do not
+  import hidden dependencies or pre-trained memories to satisfy a build gate.
 - Do not create a second emulator, restore state or launch a gameplay episode here.
 
 ## Stable boundaries to implement now
@@ -55,8 +55,7 @@ Use small typed interfaces whose payloads are versioned bounded data:
 7. DomainEvent: monotonic sequence plus UTC time, correlation/source/severity,
    concise English message and bounded typed payload; exclude credentials/frames.
 
-Adapters translate these contracts to existing LAB signatures rather than forcing
-an immediate rewrite. In STREAM implement these directly; do not fabricate empty
+Implement these contracts directly; do not fabricate empty
 “supported” tools. Unimplemented capabilities are absent or explicitly blocked.
 
 Own the single minimal code-owned ToolSpec catalog now: bounded schema validation,
@@ -68,11 +67,11 @@ the corresponding executor, profile and ownership checks exist.
 Create the gameplay package and its minimal event/check CLI now; use
 `python -m pokemon_ai.stream_checks` (or document the equivalent package command).
 Emit DomainEvent receipts and bounded PASS/FAIL/INTERRUPTED results to the
-console/offline record sink. STREAM
-may display the copied final stream kit immediately in read-only/view-only mode;
+console/offline record sink. Display the supplied stream kit immediately in
+read-only/view-only mode;
 see ../../OVERLAY_OPERATIONS.md. Missing runtime/DB means an honest empty state,
 not a dependency on future gameplay modules. B01 attaches this same renderer to
-events. If LAB already has stream_checks, reuse it rather than a second runner. No copied
+events. Later stages extend this same check runner. No supplied
 panel may import a missing executor or enable controls just to start the display.
 
 Define the trusted direct-tool invocation seam here: validated ToolSpec arguments,
@@ -84,19 +83,21 @@ commands, arbitrary Python or unsupported tools through it.
 
 ## Ownership, persistence and failure rules
 
-Keep SQLite as the authoritative shared memory. In an existing LAB, inventoried
-goal/world/team/battle/knowledge/queue tables remain canonical; migrations are
-transactional, version checked and tested on backups. New records reference existing
-IDs. STREAM defines these final schema boundaries now and creates each module's
-tables when that stage is built; private historical migration fixtures are not required.
+Keep SQLite as the authoritative shared memory. Define canonical module-owned
+schema boundaries for goals, world, team, battles, knowledge and the intent queue;
+create each module's tables only when its stage is built. Share stable IDs across
+modules. Migrations are transactional, version checked and tested on temporary
+database copies; preserve records as this build evolves. The supplied panels use
+a read-only presentation projection, not authority to choose gameplay table names.
+Document the projection schema and adapt canonical records at that boundary.
 No runtime dependency on Redis, a separate vector DB or an LLM is required here.
 
 One supervisor owns the emulator lease and delegates bounded tool invocations.
 Use an emulator-instance-wide named mutex/lease identity shared across profiles,
 plus a bridge session/fencing token that rejects commands from stale owners.
-Separate LAB/STREAM lock files are insufficient: both must contend for the same
+Separate profile lock files are insufficient: all profiles contend for the same
 mGBA instance even while their writable data/mailboxes stay isolated. Prove that
-cross-profile ownership cannot overlap before admitting input from either profile.
+cross-profile ownership cannot overlap before admitting input from any profile.
 UI/mapping/planning cannot issue concurrent input. Stop cancels the whole owned
 batch, releases keys and records a terminal stop; a checkpoint budget is separate
 from an infrastructure failure. Lease recovery must prove the prior owner ended.
@@ -109,13 +110,12 @@ cannot register tools/verifiers, grant emergency priority or bypass this boundar
 
 ## Acceptance and handoff
 
-In LAB, run an existing visible check publisher after gameplay releases feed/bridge.
-In clean STREAM B00, run the minimal offline check CLI and retain its receipts;
+Run the minimal offline check CLI and retain its receipts;
 visual publication begins in B01. No missing-panel import is a B00 dependency.
 Test schema/catalog bounds/version rejection, path isolation, one-owner conflict, restart
 with stale lease, cancellation propagation and transactional migration rollback.
 Tests must use temporary stores and mock I/O; no live restore or model request.
-Document protected LAB data fingerprints without exposing configuration secrets.
+Record test-store fingerprints and schema versions without exposing configuration secrets.
 
 Observable gate: two isolated profiles can load the same contracts, reject unsafe
 cross-profile writes, and emit a truthful idle/check event with zero game input.

@@ -8,8 +8,8 @@ Status: TARGET NEW CAPABILITY; catching is not required by every Brock strategy.
 Dependencies: B09, B10b and B11, including their transitive dependencies.
 Playable order: optional R9. Named-area travel is available only if B15 passed;
 capture itself can be tested in an already grounded local encounter without B15.
-Inventory actual capture capability first; preserve all earlier acquisition proofs.
-STREAM adds capture to general battle/tool contracts, not a Pikachu-specific script.
+Preserve earlier acquisition proofs. Add capture to the general battle/tool
+contracts built in B09–B11, not a Pikachu-specific script.
 
 ## Copy-ready implementation prompt
 
@@ -71,8 +71,8 @@ B15 supplies named travel only after its gate. Unknown habitat can request B13
 advice if that provider is available; otherwise it remains missing knowledge. Neither prerequisite
 permits a new parallel map or guessing an unobserved species from external text.
 
-LAB adds this tool beside starter/first-rival paths; preserve historical failures
-and source data. STREAM registers capture as an optional capability and reuses
+Preserve preceding stages' failures and source evidence. Register capture as an
+optional capability and reuse
 the shared ownership/state machine. Do not add a mandatory capture dependency to
 the Defeat Brock root merely because this checkpoint has been implemented.
 

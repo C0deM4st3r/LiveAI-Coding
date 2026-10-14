@@ -9,13 +9,13 @@ Status: implementation prompt; passing isolated recovery does not establish a
 clean route replay or prove that separately recorded charts share coordinates.
 Copy with the canonical restart prompt. Implement this stage only.
 
-## Reuse and ownership
+## Shared memory and ownership
 
-LAB: inventory and use its existing shared spatial store if present. Preserve
-captures, charts, measured transforms, passages, failed evidence and protected memory.
-STREAM: implement this final shared world first; no temporary per-room tile store,
+Implement this final shared world in B00's canonical SQLite memory; no temporary per-room tile store,
 duplicate navigator map or model-owned world DB. Version schemas transactionally.
 All later tools/director/policies retrieve the same world through typed queries.
+Preserve captures, charts, measured transforms, passages and failed evidence as
+this build accumulates them. The starter supplies neither mapped rooms nor charts.
 
 ## Measurement and chart identity
 
@@ -55,7 +55,7 @@ the historical spawn into current state. Ties/mismatch hold, with no global gues
 new fragment or goal fallback beyond the pin. Persist the descriptor across restart.
 
 Source evidence must match current context and capture, with no partial sprite.
-Legacy departure events may nominate a chart only from the last measured source
+Incomplete departure events may nominate a chart only from the last measured source
 with no later localized observation. They provide neither coordinates nor a new
 proof. Native expected-scene hints require an eligible current-session script
 window; blocked future goals cannot supply a destination. Pass exact session IDs.
@@ -71,13 +71,14 @@ Recovery may retry within its bounded budget; Stop/bridge error ends its ownersh
 Visible offline checks cover chart reuse, animation/camera changes, occlusion,
 duplicate rooms, source freshness, old-session hints, multiple entrances, ties,
 spawn candidate mismatch, persistence and no interpolated walked cells.
-Replay the stairs-versus-future-lab regression. Test recovery after scripted
+Create a regression where a known stairs passage conflicts with a future
+Professor Oak laboratory goal: the measured passage must win. Test recovery after scripted
 movement and a restart without assigning saved coordinates. No chart deletion.
 
 An explicitly requested live gate is a bounded known passage out/return plus a
 fresh neutral recovery. Count chart creation, matching errors and measured pose;
 two screenshots that pass a fixture do not establish a completed route.
-For clean STREAM bootstrap, chart origin is a local coordinate convention backed
+At bootstrap, chart origin is a local coordinate convention backed
 by a fresh capture, not a claim to a global town coordinate or known destination.
 
 Observable gate: measured movement updates the same chart; a known crossing pins

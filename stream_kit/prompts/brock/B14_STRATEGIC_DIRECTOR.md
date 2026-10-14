@@ -8,7 +8,7 @@ Status: general-director implementation prompt; narrow recipe planning is insuff
 Dependencies: B00–B08 plus B13. Playable order: R4, before battle/inventory work.
 B09/B10/B11/B12/B15 capabilities are absent until their own gates pass.
 Use B06's executor/GoalManager/queue, not another scheduler or battle coordinator.
-STREAM builds this rolling director directly; old starter macros are LAB adapters.
+Build this rolling director directly; prior gameplay tools remain independently callable.
 
 ## Copy-ready implementation prompt
 
@@ -83,8 +83,7 @@ means continue while progress/recovery is viable, not infinite identical failure
 Resource limits are run controls, not a reason to abandon an otherwise valid local
 action early. At an actual boundary persist a resumable hold and precise cause.
 
-LAB integrates beside existing recipes without deleting original roots/results.
-STREAM uses only the general director/executor and final reusable tools; no
+Use only the general director/executor and final reusable tools; no
 starter-specific or first-rival-specific control plane. Preserve game adapters,
 completion validators and native evidence. No autonomous code generation/plugin
 installation when a capability is absent. Propagate B05 modes through every layer.

@@ -75,13 +75,12 @@ See [the architecture](BROCK_ARCHITECTURE.md) and the OBS-ready
 [playable diagram](stream_kit/build_order.png). Diagrams show the target design,
 not live completion status.
 
-## Testing project and stream release
+## Your build and its release
 
-The maintainer's existing LAB remains a private testing workspace. The planned
-stream starts **after that LAB passes the B16 Brock release gate**. This starter
-does not claim that gate has passed. Validated prompt revisions and lessons are
-promoted here; gameplay code is rebuilt during the stream. Public builders may
-follow independently and must verify every gate in their own workspace.
+Start from a fresh checkout and build through the guides. Every prompt assumes
+only the supplied overlays and the earlier stages you have completed here.
+Create each gameplay component as its step requests it. Verify each gate in your
+workspace; B16 evaluates the player you have built.
 
 Create your own branch before building. Source you write can be committed in
 your fork; runtime data and secrets stay ignored. See

@@ -10,11 +10,9 @@ Status: navigation implementation prompt. A local walking gate does not establis
 reliable outdoor campaign traversal.
 Copy with the canonical restart prompt. Implement this stage only.
 
-## Reuse and clean construction
+## Build on the shared world
 
-LAB: inventory and adapt existing A*, navigation and movement intent/measurement
-records if present. Preserve compatibility runners and history until tested cutover.
-STREAM: implement one Navigate/Explore tool over B03's shared graph and recovery.
+Implement one Navigate/Explore tool over B03's shared graph and recovery.
 Do not construct a frozen bedroom controller followed by a replacement house
 controller. A goal's target is data; the motor contract is the same in each room.
 Deterministic routing is an actuator for learned decisions, not itself a Q learner.
@@ -103,6 +101,7 @@ replanning, and eligible known corridors walk faster without losing position.
 Narration: “The planner chooses a destination; the navigator follows and checks it.”
 Export registered navigation options, legal masks and measured outcomes to B05.
 Stop before policy training, new story objectives or an unattended campaign.
-For the stream, run the bounded route/frontier demo now after its gate passes.
+For the stream, offer the bounded route/frontier demo after its gate passes;
+execute only the operator's requested demonstration scope.
 When an event blocks progress, retain the held session and apply B07a; do not wait
 until all B stages exist to show movement, and do not resume without reconciliation.

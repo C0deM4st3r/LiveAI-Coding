@@ -9,21 +9,22 @@ Status: implementation prompt; supplied overlays are presentation only. Native
 I/O must be built and checked. No broadcast or state restore is authorized here.
 Copy with the canonical restart prompt. Implement this stage only.
 
-## Reuse and clean construction
+## Build on B00
 
-LAB: inventory and adapt an existing native bridge/event publisher if present,
-without changing working gameplay policies. Preserve independent /actions and /goal.
-STREAM: create the Python bridge and scripts/mgba_bridge.lua against the final I/O
+Create the Python bridge and scripts/mgba_bridge.lua against B00's final I/O
 contracts, and connect the supplied panels. Do not require late gameplay modules
 just to show a panel; the starter does not include a gameplay controller.
 Serve an early operator surface backed by B00's single ToolSpec catalog; unavailable
 tools stay disabled with the missing stage visible. Expand it in place later.
 Attach the visual feed renderer to B00's existing DomainEvent/check receipts;
 do not replace the offline check CLI or add another capability registry.
-The copied stream kit's stdlib-only `python stream_kit/serve.py --view-only`
+The supplied stream kit's stdlib-only `python stream_kit/serve.py --view-only`
 can show honest empty panels before this stage; see ../../OVERLAY_OPERATIONS.md.
 Keep /health and disabled operator controls in that mode. B01 integrates live
 event publishing and bounded native I/O; displaying a panel alone does not pass it.
+Preserve independent /actions and /goal. Connect gameplay records through a
+read-only adapter matching the supplied panels' documented JSON fields; do not
+assume a gameplay database schema or unpublished module exists in the starter.
 
 ## Native bridge contract
 

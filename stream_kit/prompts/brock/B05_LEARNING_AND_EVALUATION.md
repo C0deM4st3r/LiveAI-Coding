@@ -10,15 +10,15 @@ Status: target implementation. A route-learning flag alone is not a full freeze;
 evaluation is available only after every relevant write path is isolated.
 Copy with the canonical restart prompt. Implement this stage only.
 
-## Build the final learner; preserve any existing LAB baseline
+## Build the learner over measured options
 
-LAB: inventory every policy/replay/map/prototype/fact write and every launcher,
-including goal repeat, queue, resumed tools and dedicated batches. Adapt existing
-learners behind one mode/storage contract; preserve their original data unchanged.
-STREAM: start directly with goal-conditioned option learning. Do not recreate
-legacy screenshot-hash Q policies or room-specific training flags as production paths.
-Keep old LAB policy snapshots as labeled baselines, never silently migrate Q-values
-into states with different meaning. B11 extends the shared machinery to battles.
+Inventory every write and launcher built in B00–B04. Put policy, replay, map,
+prototype and fact writes behind one mode/storage contract; later goal repeat,
+queue and nested tool entrypoints must use it too. Preserve B04's deterministic
+option ranking as the comparison baseline. Start directly with goal-conditioned
+option learning, not screenshot-hash Q policies or room-specific training flags.
+Never migrate Q-values into states with different meaning. B11 extends this
+shared machinery to battles.
 
 ## Concrete first learning policy
 
@@ -72,8 +72,8 @@ failure. Do not reward an unverified goal just because a tool returned success.
 Enforce permissions at repositories/transactions, not scattered if-statements.
 Propagate EpisodeContext through CLI, panel, queue, retries and every nested tool.
 Mode cannot change mid-episode; display effective mode before starting. Do not
-silently interpret old --frozen-routes/learn_routes=False as Evaluate; explicit
-compatibility mode reports legacy semantics until operator selects the new mode.
+advertise a single disabled learner flag as Evaluate: every relevant write path
+must enforce the selected mode before evaluation is admitted.
 Hash frozen artifacts before/after; reject policy writes and record attempted
 violations. Evaluation still senses, localizes and recovers in its transient layer.
 
@@ -87,7 +87,7 @@ resource use and model calls/cost. Later battles add turns/HP/PP/native outcomes
 Same emulator state plus same seed is repeated exposure, not independent evidence;
 predeclare held-out starting variants/seeds and separate training/evaluation sets.
 
-Compare candidate with a frozen rule/legacy baseline on matched authorized starts.
+Compare candidate with B04's frozen deterministic baseline on matched authorized starts.
 Use a predeclared sample, initially at least twenty episodes per condition where
 feasible, and report counts/uncertainty instead of promising significance. Five
 clean runs are a smoke gate only. Promote an immutable policy artifact only after

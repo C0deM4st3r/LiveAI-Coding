@@ -9,7 +9,7 @@ Dependencies: B00–B08. Cross-map named travel arrives in B15, not this checkpo
 Playable order: R7, after the optional first-battle learning demonstration. B10a/B11
 are not prerequisites; local inventory/healing can be implemented earlier if needed.
 Use a known grounded local service endpoint for this gate; remote access may block.
-LAB extends the canonical shared DB; STREAM starts with these final typed tools.
+Extend the canonical shared DB with these typed inventory/service tools.
 
 ## Copy-ready implementation prompt
 
@@ -73,9 +73,8 @@ actual cost/effect for future learning, without claiming this deterministic choo
 already learns. Integrate with B05 frozen evaluation and immutable policy/memory
 snapshots; current episode observations belong in its isolated overlay.
 
-LAB retains inventoried health-decision/emergency APIs through adapters and
-replaces their missing-tool blocker only when capabilities pass gates. STREAM does
-not build the earlier permanent healing dead end. Expose bag/service coverage in
+Replace a missing-healing-capability blocker only when the corresponding native
+tool passes its gate. Expose bag/service coverage in
 the operator panel and publish concise action/effect/emergency rows to the feed.
 Frames remain in RAM with bounded diagnostic references, no item-frame archive.
 

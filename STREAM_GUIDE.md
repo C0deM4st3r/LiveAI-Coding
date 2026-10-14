@@ -7,10 +7,9 @@ then extend the same architecture. The first complete campaign is one objective:
 **Defeat Brock**, with prerequisites, recovery and learning handled by the agent.
 See [STARTER_CONTENTS](STARTER_CONTENTS.md) for exactly what is included.
 
-The maintainer is validating this architecture in a separate LAB before starting
-the stream. **Full Brock readiness is still pending.** The planned stream starts
-only after LAB meets B16's declared independent release gate. An assisted win is
-not that gate. Distinguish an available prompt from a validated capability.
+Start with a fresh clone and build the stages below. A prompt specifies a
+capability; it does not mean that capability is implemented or verified. Your
+own checks and native gameplay evidence establish progress through each gate.
 
 ## 1. Prepare a clean workspace
 
@@ -40,9 +39,9 @@ dependencies; there is no gameplay package to install yet. SQLite comes with
 Python and needs no separate server. Create your own commits as you build; review
 `git status` so keys, runtime data and game files remain local.
 
-Keep LAB and STREAM in different directories with separate writable data, bridge
-mailboxes and checkpoints. B00 implements ownership enforcement. Until then, do
-not run two controllers against the same emulator.
+Keep this build's writable data, bridge mailbox and checkpoints in its own
+directory. B00 implements ownership enforcement. Do not run two controllers
+against the same emulator.
 
 ## 2. Put the prepared displays on OBS
 
@@ -104,7 +103,7 @@ This is the coding assistant, not the runtime vision/planning model. See
 For B00, set Extra High and paste:
 
 ```text
-Read LIVE_RESTART_PROMPT.md. Mode STREAM, stage B00.
+Read LIVE_RESTART_PROMPT.md. Implement stage B00.
 Apply stream_kit/prompts/brock/B00_FOUNDATION_CONTRACTS.md.
 This is the public starter: build the gameplay interfaces from scratch.
 Keep the prepared overlays working. Implement and test this stage only.
@@ -115,7 +114,7 @@ Do not restore, start gameplay, broadcast or advance automatically.
 For each later component, replace all angle-bracket fields in this template:
 
 ```text
-Mode STREAM. Implement only <B ID and slice, if any> from <exact prompt path>.
+Implement only <B ID and slice, if any> from <exact prompt path>.
 Use LIVE_RESTART_PROMPT.md and these dependency receipts: <relevant receipts>.
 Reuse our existing final interfaces. Keep overlays working and publish actual
 checks through the feed when that integration exists. Stop after this stage.
@@ -189,25 +188,22 @@ For display faults, follow [OVERLAY_OPERATIONS](stream_kit/OVERLAY_OPERATIONS.md
 Refresh after HTML edits; restart only an owned idle server after Python changes.
 Keep learned data and game position. Do not restart gameplay to repair a panel.
 
-## 6. Finish LAB, then start this stream
+## 6. Complete the Brock campaign
 
-In an existing testing workspace use **Mode LAB** and the same R sequence:
-inventory/adapt B00; verify B01–B04 and B07a; then missing B05/B06, B07b/B08,
-B13/B14, B10a/B11, B09/B10b/B15, optional B12 and B16. Retain working baselines,
-maps, policies and failure evidence until a validated cutover exists.
-
-B16's native campaign/evaluation report decides Brock readiness. Prompt completion,
+Once the required tools and their gates pass in your build, request B16. Its
+native campaign/evaluation report establishes Brock readiness. Prompt completion,
 an assisted starter or a battle fixture does not. Record supported starts, native
 verifier coverage, policy/map seeding, evidence, limitations and rollback version.
-Preserve the exact prompt versions that produced the validated implementation.
+Preserve the prompt versions that produced your implementation and keep failed
+attempts alongside successes. Report execution success separately from measured
+learning improvement.
 
-Then build those proven slices in a separate STREAM checkout of this starter.
-The gameplay code is written there on stream; do not silently copy the LAB bot.
-Explicitly label any later import of trained experience. Recheck each generated
-slice: the same prompt does not guarantee the same code. Start broadcasting only
-when you choose to do so.
+The same workspace grows from the initial displays through navigation, events,
+interactions, battles and the complete campaign. Continue from your recorded stage
+receipts between sessions; do not restart B00 or discard experience each day.
+Start broadcasting only when you choose to do so.
 
 Keep [STREAM_RUNBOOK](stream_kit/STREAM_RUNBOOK.md) open for the short on-air
 checklist. Use [BROCK_ARCHITECTURE](BROCK_ARCHITECTURE.md) and the diagrams for
-explanation. Update the affected prompt and guide when LAB evidence changes the
-final build.
+explanation. Update the affected prompt and guide when implementation evidence
+changes a contract or runnable instruction.

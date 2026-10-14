@@ -88,16 +88,16 @@ quiet during each sample so the difference is interpretable. Do not expose accou
 pages, billing details or credentials on OBS.
 
 Use the median observed allowance change per comparable task to plan the remaining
-work before reset. A practical initial budget is 50% LAB, 30% reserved for stream
-coding and 20% for unexpected repairs; these are suggested allocations, not plan
-limits. Re-estimate after the first playable slice. If the meter does not provide a
+work before reset. Reserve part of the allowance for unexpected repairs rather
+than spending it all on the planned stages; this is a budgeting suggestion, not
+a plan limit. Re-estimate after the first playable slice. If the meter does not provide a
 usable exact delta, retain approximate samples and uncertainty instead of inventing
 credit conversions. Do not repeatedly switch models and rerun entire histories.
 
 Give the coding agent the initial prompt, ONE requested stage/slice, its dependency
 receipt, relevant files and the failing check if present. The starter includes no
-gameplay source or private LAB evidence: create the requested stage in a clean build,
-or inventory the operator's existing LAB before reusing anything. Do not paste all
+gameplay source or prior gameplay evidence: create the requested stage from the
+guide and reuse only components already built in its dependencies. Do not paste all
 prompts, entire maps or every run log. Preserve the same acceptance
 gate at cheaper settings. Escalate a bounded diagnosed issue rather than an entire
 project rebuild. [Model selection](https://developers.openai.com/api/docs/guides/model-selection).

@@ -9,7 +9,7 @@ Dependencies: B09, B10b and B14, including their transitive dependencies.
 Playable order: R8 after general battle coverage; B12 capture is optional, not required.
 This completes transport/story tools for longer campaign trials.
 Reuse B03's shared geometry/passage store, local A*, UI ownership and goal graph.
-STREAM does not rebuild house-only navigation or a hardcoded route to Brock.
+Extend those tools; do not rebuild house-only navigation or hardcode a route to Brock.
 
 ## Copy-ready implementation prompt
 
@@ -68,7 +68,7 @@ implementing; do not hardcode unverified coordinates or assume every run lacks
 the parcel. Mart receipt may trigger on entry; delivery is a distinct objective.
 The director decides which prerequisites remain and invokes existing typed tools.
 Knowledge references: [Mart entry script](https://github.com/pret/pokefirered/blob/master/data/maps/ViridianCity_Mart/scripts.inc)
-and [Oak's lab script](https://github.com/pret/pokefirered/blob/master/data/maps/PalletTown_ProfessorOaksLab/scripts.inc).
+and [Oak's laboratory script](https://github.com/pret/pokefirered/blob/master/data/maps/PalletTown_ProfessorOaksLab/scripts.inc).
 These inform roadmap design only; script/ROM/RAM flags cannot prove live progress.
 
 Explore/retrieve knowledge when a required entrance/service is unknown; keep a
@@ -77,9 +77,9 @@ mechanics (ledge direction, door interaction or unsupported UI) are capabilities
 to implement/test, not guessed walkability. Do not add all future game mechanics.
 Never choose a long risky detour just to satisfy an old fixed story recipe.
 
-LAB preserves all chart fragments and old passages; validated identity/overlap
-adds provenance without destructive merging. Keep house routes as regression
-cases. STREAM has measured world/recovery from B03 and adds this routing layer
+Preserve chart fragments and passages built through B03; validated identity/overlap
+adds provenance without destructive merging. Keep previously measured local routes
+as regression cases. Reuse B03's measured world/recovery and add this routing layer
 once. Feed current destination, meaningful leg/route changes and interruption
 outcomes; dashboard keeps transparent game and bounded current goal cards.
 

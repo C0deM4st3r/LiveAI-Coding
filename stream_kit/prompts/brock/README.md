@@ -9,12 +9,9 @@ read [LIVE_RESTART_PROMPT](../../../LIVE_RESTART_PROMPT.md) once before implemen
 A playable gate means a capability may run **after its implementation and checks
 pass**. A supporting step builds contracts, evidence or learning controls and shows
 check receipts instead of claiming new gameplay. The diagrams describe the target;
-they do not certify readiness. The maintainer's full Brock validation is pending.
-
-STREAM is the default: a separate clean checkout, new gameplay code and isolated
-experience. LAB means an existing testing workspace: reuse working components and
-protect its data. Promote only verified prompt/interface versions; rebuild and test
-them in STREAM. Do not silently import policies, maps, saves or reference code.
+they do not certify readiness. Start from a fresh checkout and implement each
+stage in the order below. Later stages reuse the interfaces, experience and
+verified receipts created by earlier stages in your build.
 
 ## Playable stream order
 
@@ -82,7 +79,7 @@ Clone the starter and complete [STREAM_GUIDE](../../../STREAM_GUIDE.md) setup.
 Set Sol Extra High, Standard, then paste:
 
 ```text
-Read LIVE_RESTART_PROMPT.md. Mode STREAM, stage B00.
+Read LIVE_RESTART_PROMPT.md. Implement stage B00.
 Apply stream_kit/prompts/brock/B00_FOUNDATION_CONTRACTS.md.
 This checkout contains the presentation starter, not gameplay code. Implement the
 final interfaces for this stage from scratch, keep the overlays working, and test
@@ -95,14 +92,9 @@ only its dependency receipts and relevant files, and name slice `B07a`, `B07b`,
 `B10a` or `B10b` explicitly. Ask for the generated command or panel action before
 the demonstration; gameplay commands do not exist in this starter.
 
-An existing LAB follows the same sequence with `Mode LAB`: inventory/adapt B00,
-verify B01–B04, B07a, then B05/B06, B07b/B08, B13/B14, B10a/B11, B09/B10b/B15,
-optional B12 and B16. Reuse valid components behind these contracts. Historical
-success does not automatically qualify a changed executor or policy.
-
-The maintainer plans to start streaming only after LAB passes B16's declared
-Brock readiness gate. This public pack does not claim that has happened. A
-released prompt version still needs its gate checked in each new STREAM build.
+Between sessions, continue from your recorded receipts and the next unmet gate.
+Do not restart the build or discard its maps and learning. A changed executor or
+policy needs relevant checks even when an earlier version passed.
 
 ## Record each handoff
 

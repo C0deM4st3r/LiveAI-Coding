@@ -1,4 +1,4 @@
-# B16 — Brock curriculum, independent evaluation and stream promotion
+# B16 — Brock curriculum, independent evaluation and release
 
 Recommended coding model: **GPT-6.1 Sol · Extra High · Standard speed**.
 Optional final audit: Astra Ultra for bounded independent evidence/release review.
@@ -9,14 +9,15 @@ Playable order: R10. Dependencies: B00–B11 (including B07a/b and B10a/b), B13,
 B14 and B15. Add B12 only if the admitted strategy needs capture. Every actually
 selected tool/profile and verifier must have passed its own gate; an early slice
 receipt never qualifies untested later branches.
-LAB is the testing/training ground; STREAM receives only declared promoted results.
+Train and evaluate the agent built in these stages; no other project's release
+or pretrained gameplay artifacts are prerequisites.
 
 ## Copy-ready implementation prompt
 
 Implement experiment profiles and the final Defeat Brock objective using B06/B14,
 not a new scripted Brock runner. The operator supplies the major objective; the
 director discovers required subgoals from current evidence, knowledge and tools.
-Keep original game files, skills, shared charts, failures and history protected.
+Preserve this build's game files, skills, shared charts, failures and history.
 
 Admission checks capability/adapter coverage, policy and knowledge versions,
 single ownership, supported UI, current evidence freshness and missing prerequisites.
@@ -83,17 +84,17 @@ after verified recovery; unresolved recovery holds rather than silently ending o
 restarting the batch. Allowed gameplay failure can advance only to the next already
 authorized episode. Infrastructure failure never acts blind.
 
-Create PromotionManifest with immutable code/config/schema/model/prompt/adapter
+Create ReleaseManifest with immutable code/config/schema/model/prompt/adapter
 versions, policy artifacts/hashes, declared knowledge/map seeding, fixture/test and
 live reports, known limitations, rollback manifest and explicit approval record.
-Do not copy credentials, ROMs, unsanctioned saves or all LAB mutable history into
-STREAM. Artifact transfer is explicit; never overwrite working stream policies
-mid-run or silently seed a “learning from nothing” demonstration with trained data.
+Keep credentials, ROMs and private save/history data out of a distributable release.
+Never replace an active policy mid-run. Select a validated immutable policy only
+at an explicit safe handoff, retain rollback, and show its version and training
+lineage. A fresh-learning demonstration must not silently load trained values.
 
-STREAM rebuilding from the canonical prompts implements this final architecture
-once. It can start fresh learning or load a declared promoted policy/knowledge set;
-state which on screen. LAB experimentation continues independently; promotion
-requires its gate and operator action. No commit/push/broadcast/deletion is implied.
+This release evaluates the implementation built here from the starter. Continue
+experiments in isolated candidate profiles; activation requires the release gate
+and explicit operator action. No commit/push/broadcast/deletion is implied.
 
 ## Verification and gate
 

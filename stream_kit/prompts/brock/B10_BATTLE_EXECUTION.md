@@ -9,13 +9,14 @@ Status: battle implementation prompt; build and validate the requested profile s
 Request one slice. Apply the shared contract and its slice; do not require inventory
 or all wild/trainer cases before demonstrating the first admitted battle profile.
 B11 trains decisions; B10 makes those decisions execute and verifies actual results.
-LAB inventories and reuses verified battle/post-battle and native team readers, if any.
-STREAM builds one encounter tool with incremental profiles, never a rival coordinator.
+Build one encounter tool over B07's native team/UI readers with incremental battle
+profiles, never a rival-specific coordinator.
 
 ## Shared copy-ready executor contract
 
-Separate BattlePolicy from native BattleExecutor. Use the canonical battle history
-and tool/completion registries; add schemas without rewriting earlier result semantics.
+Separate BattlePolicy from native BattleExecutor. Create canonical battle history
+within B00's schema boundaries and register tools/completions in B06. Widen schemas
+additively without rewriting earlier profiles' result semantics.
 Expose player.battle.observe, legal_actions, execute(action,expected_state_id),
 resume(encounter) and close(encounter). Every call uses B06's single lease/session.
 

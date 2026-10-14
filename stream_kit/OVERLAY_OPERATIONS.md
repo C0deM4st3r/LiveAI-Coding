@@ -13,8 +13,8 @@ SQLite database, Lua bridge or emulator. Missing stores show waiting/unknown/zer
 never an invented map, party, completed goal or gameplay attempt. Test Lab clearly
 disables all controls. Its embedded Actions/Goal panels still update normally.
 
-The public starter already includes this presentation subset. When copying it to
-a separate clean STREAM workspace, preserve the `stream_kit/` folder name:
+The public starter already includes this presentation subset. Keep the
+`stream_kit/` folder name in your fresh checkout:
 
 ```text
 stream_kit/__init__.py
@@ -41,7 +41,7 @@ the panels. Separately bring the initial prompt and requested stage prompt. This
 a prepared presentation seed; disclose that reuse on stream. Later stages connect
 to these same panels rather than creating disposable replacements.
 
-From the STREAM workspace root, with an installed Python on PATH:
+From the repository root, with an installed Python on PATH:
 
 ```powershell
 python .\stream_kit\serve.py --view-only --port 8765
@@ -71,7 +71,7 @@ python .\stream_kit\serve.py --view-only --port 8766 --status-path .\local\strea
 
 Choose paths inside the intended workspace; missing paths remain missing. The
 trusted event publisher and canonical gameplay stores own writes, not the server.
-An empty custom source is useful for layout review without displaying LAB history.
+An empty custom source is useful for layout review without displaying run history.
 
 ## Connect OBS and verify the service
 
@@ -208,21 +208,13 @@ Goal cards use a shared current-session projection, capped at five; compact retr
 for display while retaining raw history. Do not use legacy `goals_updated` to fake
 the eight-state GoalManager lifecycle or bypass its trusted completion verifiers.
 
-## Verified baseline and maintenance checks
+## Check the presentation before building gameplay
 
-On 2026-10-14 a copied kit ran under Python with site packages and environment
-overrides disabled, without `pokemon_ai` or `test_lab.py`. All six HTML panels and
-empty read endpoints worked; all six control POSTs rejected with 503. Viewer reads
-created no local/runtime directory or database. Malformed status JSON fell back
-to waiting without modifying the source. Non-object retained snapshots also leave
-the publisher ready before server startup, without rewriting that source. Maintainer
-regression checks additionally cover attribution, retention and data projections.
-Those private LAB tests are not part of the public gameplay-free starter.
-
-All six panel scripts compiled. Empty Actions, Goal, Dashboard, Test Lab and Vision
-were rendered and reviewed; a narrow Actions controller clipping issue was fixed
-so A/B remain visible. Architecture is reviewed separately with its current diagram.
-These checks establish presentation/bootstrap behavior, not gameplay success.
+The viewer should deliver all six HTML panels and empty data endpoints before
+gameplay exists. Viewer control POSTs must return 503. Reading pages must not
+create runtime directories, databases or goal transitions. Missing or malformed
+status data should display waiting without modifying its source. These are
+presentation requirements, separate from emulator connectivity or gameplay success.
 
 The public presentation smoke check needs only Python and uses a temporary data
 directory plus an ephemeral loopback port. It does not publish to the active feed,
@@ -234,7 +226,7 @@ python .\stream_kit\check.py
 
 `python -m stream_kit.check` is equivalent. A successful result verifies page
 delivery, empty data projections, rejected control requests, temporary fixture
-events and private-file isolation. It does not verify browser layout, OBS capture
+events and isolation of files outside the served assets. It does not verify browser layout, OBS capture
 or gameplay. Also inspect the actual Browser Sources and their transparent column.
 Once a stage has a visible check publisher, run its checks with exclusive feed and
 bridge ownership. Do not import another project's gameplay solely to run its

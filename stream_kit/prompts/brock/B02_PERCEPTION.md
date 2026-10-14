@@ -9,11 +9,9 @@ Status: perception implementation prompt; a supplied panel is not a native detec
 Coverage is limited to the game/UI profiles actually built and verified here.
 Copy with the canonical restart prompt. Implement this stage only.
 
-## Reuse and clean construction
+## Build on native observations
 
-LAB: inventory and reuse existing native detectors, game adapters and reviewed
-UI evidence if present rather than introducing another image-state memory.
-STREAM: implement a single PerceptionAdapter producing B00 observations. Keep
+Implement a single PerceptionAdapter producing B00 observations from B01 captures. Keep
 FireRed templates/rules separate from generic ownership, freshness and schema.
 Do not build a screenshot-hash game controller or require Qwen before mapping.
 Other Pokémon games need their own tested adapter; an interface is not support.
@@ -62,8 +60,9 @@ Unknowns remain explicit; do not average inconsistent readings into certainty.
 
 ## Fixtures and metrics
 
-Reuse authorized existing recorded frames without rewriting source evidence.
-Maintain labeled samples for each supported UI, animation, occlusion, duplicate
+Collect authorized samples through B01, or explicitly supplied fixtures with
+provenance; no game screenshots are included in the starter. Preserve source
+evidence. Maintain labeled samples for each supported UI, animation, occlusion, duplicate
 sprite, scrolling, stale capture, fade and look-alike place. Add fixtures only
 when needed; record what was human-labeled versus inferred.
 Test invariance on animation and camera motion, freshness rejection and gating.

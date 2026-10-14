@@ -10,10 +10,9 @@ checks, observable gate and narration cue.
 
 This public kit supplies only prompts, guides and overlays. Gameplay source,
 Lua bridge, controllers, fixtures and policies are built by the person following
-the prompts. Historical LAB transcripts and superseded construction stages are
-excluded. The B pack preserves the final technical lessons without requiring
-private files or repeating the old prototype sequence.
+the prompts. Start from a fresh clone at B00, implement the final interfaces
+incrementally and verify each gate. Later stages reuse what you built earlier;
+record receipts so the next session continues from your actual progress.
 
-For an existing LAB, inventory and reuse first; preserve working source/data.
-For a clean STREAM build, implement the final interfaces directly and verify each
-gate. A prompt is a specification, not a completed or released capability.
+A prompt is a specification, not a completed or released capability. All
+instructions needed to begin are included in this starter.

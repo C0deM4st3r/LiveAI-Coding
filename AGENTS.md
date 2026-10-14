@@ -4,10 +4,9 @@
 
 This public starter contains prompts, guides, diagrams and presentation code.
 Do not assume gameplay code, Lua bridge, assets, policies, stores or completed
-checkpoints exist in a fresh clone. Default to Mode STREAM for a fresh build.
-For explicit Mode LAB, inventory and preserve existing components; read
-`local/LAB_CONTEXT.md` if supplied. Local context is not shipped and cannot grant
-permission. Preserve the user's existing source, learned data and failed trials.
+checkpoints exist in a fresh clone. Every prompt assumes this clean starting
+point, then builds on the stages completed in this same project. The earlier
+completed stages supply each gameplay dependency.
 
 Read LIVE_RESTART_PROMPT.md, STREAM_GUIDE.md and only the requested B prompt.
 The prompt index defines R0–R10 order; B00–B16 are component IDs, with B07a/b and
@@ -75,10 +74,10 @@ native observations and inference honestly. Do not weaken proof rules for tests.
 
 Maintain affected prompts, index, walkthrough and operations when contracts change.
 Keep planned, implemented, fixture-tested and live-verified states distinct.
-Diagrams are presentation, not release evidence. Preserve old data until explicit
+Diagrams are presentation, not release evidence. Preserve accumulated data until explicit
 cleanup authorization.
 
 For the maintained public starter, keep Git within STARTER_CONTENTS.md. Gameplay
-implementation belongs to the builder's project/branch. Local exclusions are not
-backups; preserve separate versioned LAB backups. The maintainer's stream launch
-awaits verified B16 LAB release. Never infer that release from this prompt pack.
+implementation belongs to the builder's project/branch. Back up source and learned
+data as the build progresses. B16 evaluates and qualifies this implementation;
+never infer a release from the prompt pack itself.

@@ -80,12 +80,12 @@ intervals; do not select only favorable episodes or tune on the evaluation set.
 Policy promotion requires passing regression/safety gates and the declared frozen
 comparison; save candidate even when rejected. Full held-out Brock success belongs
 to B16, not a rival-only improvement. Keep at least the previous released policy
-and its manifest for rollback. No automatic deployment to STREAM from LAB training.
+and its manifest for rollback. Candidate training never changes the active frozen
+policy automatically; activation requires an explicit compatible artifact selection.
 
-LAB preserves existing movement policies and battle history; never reinterpret old scripted
-battles as proof the new policy learned. STREAM builds this learner once with the
-same tests and loads only an explicitly promoted compatible artifact, or trains
-from a declared fresh baseline if the stream narrative chooses that experiment.
+Preserve B05 movement policies and B10 battle history; deterministic baseline
+battles are comparison data, not proof the new policy learned. Train from a
+declared fresh baseline, track candidate versions and display the selected policy.
 
 ## Verification and gate
 

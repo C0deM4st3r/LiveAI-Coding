@@ -36,16 +36,13 @@ Display projections define integration contracts, not a prebuilt game agent.
 B00/B01 create the typed event adapter. A displayed goal is not automatically
 executable or verified.
 
-## Maintaining this starter alongside a private LAB
+## Maintaining the starter
 
-Keep gameplay code and old evidence locally or in a separate private repository.
-Exclude private LAB paths via `.git/info/exclude`; those rules are deliberately
-not distributed to builders. Stage only the public paths above. Review
-`git diff --cached --name-only` and reachable history before publishing.
-Do not push LAB backup refs or force-add runtime files.
+Keep the maintained starter limited to the presentation and documents above.
+Builders add their own gameplay implementation in their working branch or fork.
+Review `git diff --cached --name-only` before publishing. Exclude runtime data,
+credentials and game files. Do not force-add ignored secrets or saves.
 
-This conversion preserves the prior full snapshot in an ignored local Git
-bundle and retains working LAB files. That is a point-in-time recovery copy,
-not automatic versioning of later LAB development. Future LAB work needs its
-own private commits/backups while validated prompt lessons update this starter.
-A local commit does not publish anything or change repository visibility.
+Each guide begins with the supplied files and its named preceding stages.
+Back up your implementation and experience as you
+progress. A local commit does not publish anything or change repository visibility.

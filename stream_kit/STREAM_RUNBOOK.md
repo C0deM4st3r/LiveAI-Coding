@@ -4,16 +4,15 @@ Updated 2026-10-14. For the full beginner walkthrough use
 [STREAM_GUIDE](../STREAM_GUIDE.md). For the next prompt/model/dependency use the
 [R0–R10 index](prompts/brock/README.md). B numbers identify components, not order.
 This public repository supplies presentation and instructions; gameplay code is
-built during the project. The maintainer's stream starts after a separate LAB
-passes the Brock release gate; that result is currently pending.
+built during the project, starting with B00 in a fresh clone.
 
 ## Before going live
 
-1. Select one LAB-validated prompt version and its dependency receipts. Set the
-   recommended coding model in the index. Do not read the entire prompt pack into
-   every coding request.
-2. Open the separate STREAM checkout, its own runtime data and the selected game
-   instance. Never share a writable database, bridge mailbox or controller with LAB.
+1. Select the next prompt and its dependency receipts from your build. Start with
+   B00 when none exist. Set the recommended coding model in the index. Do not read
+   the entire prompt pack into every coding request.
+2. Open your build checkout, its own runtime data and the selected game instance.
+   Never share a writable database, bridge mailbox or controller with another build.
 3. Start the provided display server from the repository root:
 
    ```powershell
@@ -55,7 +54,7 @@ no gameplay launch command.
 
 For **every component/slice**, not just each R gate:
 
-1. Paste the restart prompt once, then request one stage with mode, exact prompt
+1. Paste the restart prompt once, then request one stage with its exact prompt
    file and dependency receipts. Choose the model listed in the index and use
    Standard speed. The full walkthrough supplies a reusable request template.
 2. Let the coding agent implement and run focused checks. Gameplay must first

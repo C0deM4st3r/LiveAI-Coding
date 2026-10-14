@@ -7,25 +7,25 @@ See [model guidance](MODEL_GUIDANCE.md).
 Status: TARGET IMPLEMENTATION PROMPT; general execution is not implemented yet.
 Dependencies: B00–B05. Implement only this checkpoint when requested.
 Playable order: R3 supporting step; early B07a can already exist without this executor.
-LAB may reuse an inventoried GoalManager, completion windows and persistent queue.
-Verify their behavior; recipe dispatch alone is not general step-graph execution.
-STREAM builds the general executor directly; do not recreate recipe-only admission.
+Build the general executor directly over the preceding stages' trusted tools;
+recipe dispatch alone is not general step-graph execution.
 
 ## Copy-ready implementation prompt
 
-Read the foundation contracts and current capability inventory. Preserve existing
-canonical history, manual blockers and original policies. Implement one rolling
-goal graph beneath the operator's major objective, initially usable with existing
+Read the foundation contracts and preceding stages' capability inventory. Preserve
+their canonical observations and policies. Implement one rolling
+goal graph beneath the operator's major objective, initially usable with their
 registered local tools. Do not implement a separate Brock runner or second goal DB.
 
 Implement GoalManager create/get/get_ready/select/activate/block/suspend/resume/
-complete/fail/cancel operations, adapting existing LAB names where needed. Statuses
+complete/fail/cancel operations with consistent typed signatures. Statuses
 are proposed, ready, active, blocked, paused, completed, failed and cancelled.
 Each goal has a unique ID, type/target, source, priority, status, dependencies and
 blockers, registered success criteria, created/updated timestamps, retry limits,
 failure reasons and optional parent. Validate schemas, reject parent/dependency
 cycles and invalid transitions, and default unadmitted proposals to proposed.
-Parent grouping is not completion. Persist lifecycle/selection/evidence events.
+Parent grouping is not completion. Persist lifecycle/selection/evidence events;
+retain historical goals, failures and manual blockers as the build evolves.
 Keep one canonical persistent operator-intent queue and one owned consumer. A queued
 objective must not reset context or start another bridge owner during gameplay.
 
@@ -33,7 +33,7 @@ Extend B00's single code-owned ToolSpec catalog with supported game/UI profiles,
 preconditions, effect hypotheses, cancellation/resource ownership, result schemas
 and allowed completion-rule IDs; preserve its stable IDs/versioned strict arguments.
 Add admission and execution against this catalog, never another registry. Publish
-capabilities from it; remove duplicated availability booleans through LAB adapters.
+capabilities from it; do not add duplicated availability booleans.
 Availability requires the implementation, verifier and current environment profile.
 
 Use a bounded proposal envelope: schema_version, root_id, context_id, revision,
@@ -57,8 +57,9 @@ Persist dispatch intent before input, bounded session progress and the resulting
 receipt afterward. Restart reconciliation observes the current UI before deciding
 whether to resume; an ambiguous dispatch must not be blindly repeated. Make graph
 admission/idempotency transactional and migrations additive with rollback tests.
-Reuse existing tables where appropriate; supplementary executor tables are adjuncts
-in the canonical DB, not duplicate goals/maps. Retain complete plan lineage.
+Create goal and executor tables within B00's canonical schema boundaries, referencing
+B03 world IDs and B05 policy lineage. Do not duplicate goals/maps. Retain complete
+plan lineage and project read-only goal records into the supplied overlay schema.
 
 Distinguish missing capability, missing knowledge, stale state, recoverable control
 failure, tactical failure and infrastructure error. Missing knowledge may request
@@ -83,10 +84,9 @@ boundary. Initially a human may supply a bounded validated tool graph; general
 AI-generated goals arrive in B14. The first graph uses available local navigation
 and observation tools, not future bag/travel/battle placeholders marked available.
 
-LAB: wrap working recipes as compatibility tools, keep their original roots and
-proof receipts. The new executor must also execute real composite registered calls;
-do not merely translate text back into old recipes. STREAM omits those
-temporary coordinators; reusable tools, registry and graph executor are canonical.
+Execute real composite registered calls through reusable tools, the registry and
+the graph executor. Do not translate text into a hardcoded story recipe or add
+temporary objective-specific coordinators.
 Carry B05 mode, immutable policy references and actual write accounting through
 every dispatch and resumption. This checkpoint itself adds no learned scheduler.
 
