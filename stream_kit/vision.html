@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One AI · Vision and memory checks</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b1420;color:#e7eff6;font:22px Segoe UI,Arial,sans-serif}
+main{padding:24px;max-width:1440px;margin:auto;height:100vh;display:flex;flex-direction:column}header{display:flex;justify-content:space-between;gap:20px;margin-bottom:16px;flex-shrink:0}
+h1{font-size:28px;margin:0}h2{font-size:18px;color:#86e6bd;margin:0 0 12px}p{margin:10px 0;line-height:1.35}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;flex:1;min-height:0}.box{background:#152336;border:1px solid #34485c;border-radius:14px;padding:20px;min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+img{width:100%;height:clamp(130px,32vh,300px);flex-shrink:0;object-fit:contain;image-rendering:pixelated;background:#090e15;display:none}
+#source{font-size:17px;color:#adc1d4}#scene{font-size:26px}#uncertain{color:#e4bd87;font-size:18px}
+.counts{color:#86e6bd;font-size:26px}#checks{font-size:17px;overflow-y:auto;min-height:0;flex:1}.check{border-top:1px solid #34485c;padding:9px 0}small{color:#aac1d4;font-size:16px}#reason{font-size:19px}#summary{overflow-y:auto;min-height:0;max-height:130px}#uncertain{max-height:90px;overflow-y:auto;flex-shrink:0}
+@media(max-width:850px){.grid{grid-template-columns:1fr;flex:none}body{font-size:19px}main{padding:16px;height:auto}.box{overflow:visible}#checks{max-height:360px}}
+</style>
+<main><header><div><h1>What the AI can see and remember</h1><p id="source">Waiting for observation</p></div><strong id="status">Waiting</strong></header>
+<div class="grid"><section class="box"><h2>OBSERVED FRAME · MODEL HYPOTHESIS</h2><img id="frame" alt="Latest observed game frame"><p id="scene">Unknown scene</p><small id="ui">OpenCV UI: unknown · Model UI: unknown</small><p id="summary">No model interpretation yet</p><p id="uncertain"></p><small>Descriptions and proposed destinations need verification through game observations. They do not award goal success.</small></section>
+<section class="box"><h2>QWEN CALL GATE</h2><p class="counts" id="counts">0 calls · 0 memory hits</p><p id="reason">Waiting</p><p><small id="latency">No inference timed yet</small></p><h2>VISIBLE CHECKS</h2><p id="totals">0 passed · 0 failed</p><div id="checks">Results will appear here.</div></section></div></main>
+<script>
+const put=(id,v)=>document.getElementById(id).textContent=v;let frameVersion=null;
+async function poll(){try{const r=await fetch('/status',{cache:'no-store'});if(!r.ok)throw Error(r.status);const s=await r.json();
+put('status',s.active&&Date.now()-Date.parse(s.timestamp)>10000?'No recent events':s.status);put('source',s.source||'Waiting');put('scene',s.scene||'Unknown');put('summary',s.vision_summary||'No model interpretation yet');
+put('uncertain',(s.uncertainties||[]).length?'Uncertain: '+s.uncertainties.join(' · '):'');put('counts',(s.qwen_calls||0)+' calls · '+(s.cache_hits||0)+' memory hits');put('reason',s.qwen_reason||'Waiting');
+put('ui','OpenCV UI: '+(s.visual_kind||'unknown')+' · Model UI: '+(s.model_ui||'unknown'));
+put('latency',typeof s.qwen_latency==='number'?'Last inference: '+s.qwen_latency.toFixed(2)+' seconds':'No inference timed yet');put('totals',(s.checks?.passed||0)+' passed · '+(s.checks?.failed||0)+' failed');
+if(!s.frame_version){document.getElementById('frame').style.display='none';frameVersion=null;}
+else if(s.frame_version!==frameVersion){frameVersion=s.frame_version;const img=document.getElementById('frame');img.src='/frame?v='+encodeURIComponent(frameVersion);img.style.display='block';}
+const checks=document.getElementById('checks');checks.replaceChildren();(s.story||[]).filter(x=>x.button==='test').slice(-8).reverse().forEach(x=>{const e=document.createElement('div');e.className='check';e.textContent=x.decision+' — '+x.outcome;checks.append(e);});
+}catch{put('status','Display disconnected')}setTimeout(poll,500)}poll();
+</script></html>

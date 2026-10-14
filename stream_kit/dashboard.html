@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One AI · Running scene</title>
+<style>
+*{box-sizing:border-box}html,body{height:100%;width:100%;margin:0;overflow:hidden}
+body{background:transparent;color:#edf5ff;font:20px Segoe UI,Arial,sans-serif}
+main{height:100vh;padding:20px;display:flex;flex-direction:column;gap:16px}
+header{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-shrink:0;height:48px;background:#080f19;border-radius:10px;padding:0 14px}h1{font-size:25px;margin:0;letter-spacing:.7px}nav{display:flex;gap:18px;font-size:16px}a{color:#9bbcd8;text-decoration:none}nav a[aria-current]{color:#80e4b9}
+.workspace{display:grid;grid-template-columns:minmax(0,55fr) minmax(0,45fr);gap:16px;flex:1;min-height:0}
+.game-column{display:flex;flex-direction:column;gap:16px;min-width:0;min-height:0}.game-box{flex:1;min-height:0;border:1px solid #2c4057;border-radius:16px;background:transparent;display:flex;flex-direction:column;padding:16px;gap:10px}.caption{display:flex;justify-content:space-between;gap:12px;color:#91acc5;font-size:15px;letter-spacing:1px;background:#101b2a}
+.game-stage{flex:1;min-height:0;position:relative;overflow:hidden;background:transparent;border-radius:10px}
+.right-column{display:flex;flex-direction:column;gap:10px;min-width:0;min-height:0;background:#080f19;border-radius:18px;padding:10px}
+iframe{width:100%;border:0;display:block;min-height:0}.goal-frame{height:180px;flex-shrink:0}.action-frame{flex:1;min-height:0;border-radius:14px;background:#0a111c}
+.card{background:#101b2a;border:1px solid #2d4056;border-radius:14px;padding:20px;min-width:0}
+.history-card{height:245px;flex-shrink:0;display:flex;flex-direction:column}.history-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}.history-heading h2{margin:0;font-size:16px;color:#8facc4;letter-spacing:1px}.history-heading span{font-size:14px;color:#8babc2;text-align:right}#checkpoint-history{overflow:hidden;min-height:0;flex:1;margin-top:12px;display:grid;grid-template-columns:repeat(var(--checkpoint-columns,4),minmax(0,1fr));gap:12px}
+.checkpoint{display:flex;flex-direction:column;gap:6px;min-width:0;min-height:0;padding:10px;border:1px solid #344c62;border-radius:11px;background:#152335}.checkpoint.current{border-color:#80e4b9;background:#162d32}.checkpoint-top{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:13px;color:#91abc1}.checkpoint-badge{font-size:13px;font-weight:700;color:#80e4b9}.checkpoint-badge.FAIL{color:#f3a4a4}.checkpoint-badge.INTERRUPTED,.checkpoint-badge.REVIEW,.checkpoint-badge.PAUSED{color:#e5c38c}.checkpoint-title{font-size:22px;font-weight:600;line-height:1.2;min-height:2.4em;max-height:2.4em;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow-wrap:anywhere}
+.checkpoint-counts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:auto}.checkpoint-count{font-size:24px;font-weight:600;line-height:1.1;color:#80e4b9}.checkpoint-count.fail{color:#f3a4a4}.checkpoint-count.stopped{color:#e5c38c}.checkpoint-count small{display:block;font-size:11px;letter-spacing:.6px;font-weight:500;margin-top:3px;color:#9ab1c6}.recent-attempts{display:flex;gap:5px;min-height:23px}.attempt-mark{font-size:12px;padding:4px 6px;border-radius:5px;background:#20364a;white-space:nowrap;color:#80e4b9}.attempt-mark.FAIL{color:#f3a4a4}.attempt-mark.INTERRUPTED,.attempt-mark.REVIEW,.attempt-mark.PAUSED{color:#e5c38c}.empty{color:#89a4bb;font-size:17px;line-height:1.5}#status{color:#80e4b9;font-size:17px}.bad{color:#f1be8d!important}
+.one-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.decision-line{flex-shrink:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center;padding:8px 12px;background:#101b2a;border:1px solid #2d4056;border-radius:10px;min-height:42px}
+.decision-line .label{font-size:11px;letter-spacing:1px;color:#8facc4;font-weight:700}
+.decision-line #hy-decision{font-size:18px;line-height:1.25;color:#edf5ff;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.decision-line #hy-world{display:none}
+@media(max-width:1800px){.history-card{height:220px}.goal-frame{height:175px}.checkpoint{padding:8px;gap:4px}.checkpoint-title{font-size:20px}.checkpoint-count{font-size:22px}.checkpoint-count small{font-size:10px}.recent-attempts{min-height:19px}.attempt-mark{font-size:11px;padding:3px 6px}}
+@media(max-width:1100px){.workspace{grid-template-columns:minmax(0,1fr) 390px!important}main{padding:12px;gap:12px}.workspace,.game-column{gap:12px}h1{font-size:19px}nav{font-size:13px;gap:10px}.history-card{height:210px;padding:12px}.checkpoint{padding:9px;gap:6px}.checkpoint-title{font-size:19px}.checkpoint-count{font-size:22px}.goal-frame{height:165px}.decision-line #hy-decision{font-size:13px}}
+</style>
+<main>
+ <header><h1>ONE AI · EVERY POKÉMON GAME</h1><span id="status">Waiting for agent</span><nav aria-label="Stream panels"><a href="/actions" target="_blank">Actions</a><a href="/goal" target="_blank">Goal</a><a href="/test-lab" target="_blank">Test console</a><a href="/dashboard" aria-current="page">Running scene</a></nav></header>
+ <div class="workspace" id="workspace">
+  <section class="game-column" aria-label="Game, current goal and checkpoint history">
+   <div class="game-box"><div class="caption"><span>GAME</span><span id="game-source">Live mGBA capture · OBS</span></div><div id="run-statistics" class="one-line" style="font-size:16px;color:#a9c9de;background:#101b2a;padding:5px 8px;border-radius:5px">Learning, memory and checks will appear here</div><div class="game-stage" id="game-stage" aria-label="Transparent area for the live mGBA capture in OBS"></div></div>
+   <iframe class="goal-frame" id="goal-panel" src="/goal" title="Current goal and attempt counter"></iframe>
+   <section class="card history-card"><div class="history-heading"><h2>CHECKPOINT HISTORY</h2><span id="history-window">Current checkpoint first</span></div><div id="checkpoint-history" aria-label="Checkpoint summary cards, no scrolling"><div class="empty">Checkpoint cards will appear here.</div></div></section>
+  </section>
+  <section class="right-column" aria-label="Activity panel and decision">
+   <iframe class="action-frame" id="action-panel" src="/actions" title="Controller, map, goals and activity feed"></iframe>
+   <div class="decision-line" aria-label="Decision summary"><span class="label">DECISION</span><div id="hy-decision">Waiting for a plan</div><div id="hy-world"></div></div>
+  </section>
+ </div>
+</main>
+<script>
+const params=new URLSearchParams(location.search),demo=params.get('demo')==='1';
+const gameShare=Number(params.get('game')||55);if(Number.isFinite(gameShare)&&gameShare>=40&&gameShare<=60)document.getElementById('workspace').style.gridTemplateColumns='minmax(0,'+gameShare+'fr) minmax(0,'+(100-gameShare)+'fr)';
+if(demo){document.getElementById('action-panel').src='/actions?demo=1';document.getElementById('goal-panel').src='/goal?demo=1';}
+const put=(id,text)=>document.getElementById(id).textContent=text;
+const el=(tag,cls,text)=>{const e=document.createElement(tag);e.className=cls;e.textContent=text;return e;};
+let historySignature='',latestState=null,managed=null;
+const historyBox=document.getElementById('checkpoint-history');
+function checkpointTitle(name){
+ if(name==='Regression suite · test_*.py')return 'All code checks';
+ if(name.startsWith('Regression suite · test_'))return name.slice('Regression suite · test_'.length).replace(/\.py$/,'').replaceAll('_',' ')+' checks';
+ if(name==='Visual observation · mGBA')return 'Game observation';
+ if(name==='Visual observation · recorded')return 'Recorded observation';
+ return name;
+}
+function renderHistory(s){
+ const history=s.checkpoint_history||[],totals=s.checkpoint_totals||{};
+ const ordered=[...new Set([s.checkpoint_name,...[...history].reverse().map(h=>h.name),...Object.keys(totals).reverse()].filter(Boolean))];
+ const capacity=Math.max(1,Math.min(4,Math.floor((historyBox.clientWidth+12)/260)));
+ const names=ordered.slice(0,capacity),signature=JSON.stringify([names,totals,history,s.active,s.status,capacity]);
+ if(signature===historySignature)return;historySignature=signature;
+ historyBox.style.setProperty('--checkpoint-columns',String(Math.max(1,names.length)));
+ put('history-window',names.length?names.length+' of '+ordered.length+' checkpoints · current first':'Current checkpoint first');
+ historyBox.replaceChildren();if(!names.length){historyBox.append(el('div','empty','Checkpoint cards will appear here.'));return;}
+ names.forEach(name=>{
+  const recent=history.filter(h=>h.name===name),last=recent.at(-1),t=totals[name]||{attempts:recent.length,passed:recent.filter(h=>h.result==='PASS').length,failed:recent.filter(h=>h.result==='FAIL').length,interrupted:recent.filter(h=>h.result==='INTERRUPTED').length};
+  const current=name===s.checkpoint_name;
+  const result=t.active?(current&&!s.active?(/review/i.test(s.status||'')?'REVIEW':'PAUSED'):'RUNNING'):(t.last_result||last?.result||'WAITING');
+  const label=r=>r==='INTERRUPTED'?'STOPPED':r;
+  const source=t.source||last?.source||'',kind=/^CHECK\b/.test(source)?'CHECK':/^PLAYER\b/.test(source)?'GAME':/^LIVE\b/.test(source)?'VISION':'CHECKPOINT';
+  const card=el('article','checkpoint'+(current?' current':''),'');card.dataset.checkpoint=name;card.setAttribute('aria-label',name+' · '+t.attempts+' attempts · '+label(result));
+  const top=el('div','checkpoint-top','');top.append(el('span','',kind+' · '+t.attempts+' '+(t.attempts===1?'ATTEMPT':'ATTEMPTS')),el('span','checkpoint-badge '+result,label(result)));
+  card.append(top,el('div','checkpoint-title',checkpointTitle(name)));
+  const counts=el('div','checkpoint-counts','');[[t.passed,'PASSED',''],[t.failed,'FAILED','fail'],[t.interrupted,'STOPPED','stopped']].forEach(([value,text,cls])=>{const count=el('div','checkpoint-count '+cls,String(value||0));count.append(el('small','',text));counts.append(count);});card.append(counts);
+  const marks=recent.map(h=>({attempt:h.attempt,result:h.result}));if(t.active)marks.push({attempt:t.attempts,result});
+  const strip=el('div','recent-attempts','');strip.setAttribute('aria-label','Latest three attempts, oldest to newest');
+  marks.slice(-3).forEach(h=>strip.append(el('span','attempt-mark '+h.result,'#'+h.attempt+' '+label(h.result))));
+  if(!marks.length)strip.append(el('span','attempt-mark','No recent entries'));card.append(strip);historyBox.append(card);
+ });
+}
+new ResizeObserver(()=>{if(latestState)renderHistory(latestState);}).observe(historyBox);
+function render(s){
+ latestState=s;
+ const stale=s.active&&(!s.timestamp||Date.now()-Date.parse(s.timestamp)>10000);
+ put('status',demo?'DEMO · no game input':stale?'No recent agent events':managed?.current?((s.mode||'').startsWith('Goal Manager')?'Goal Manager · '+managed.current.status:'Managed: '+managed.current.status+' · '+s.status):s.status);document.getElementById('status').classList.toggle('bad',Boolean(stale||demo));
+ const h=managed?.hybrid;
+ const terminal=h?.main_goal&&['completed','failed','cancelled'].includes(h.main_goal.status);
+ const decision=s.active&&s.budget_label==='checks'?s.outcome:terminal?(h.main_goal.failure_reasons?.at(-1)?.reason||'Objective '+h.main_goal.status):h?.decision?.summary||h?.active_goal?.target?.reason||s.outcome||'Waiting for a plan';
+ const environment=h?.world?.environment;
+ const skill=terminal?null:h?.skill?.name;
+ put('hy-decision',decision+(environment?' · '+(environment.value||'')+'/'+(environment.status||''):'')+(skill?' · '+skill:''));
+ const learning=managed?.hybrid?.learning||{};put('run-statistics','Learning '+(learning.updates||0)+' updates / '+(learning.replay||0)+' replay · Memory '+(learning.memory_hits??s.cache_hits??0)+' hits · Checks '+(s.checks?.passed||0)+' passed / '+(s.checks?.failed||0)+' failed');
+ renderHistory(s);
+}
+async function poll(){try{const [stateResult,goalsResult]=await Promise.allSettled([fetch('/status',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(r.status);return r.json();}),demo?Promise.resolve(null):fetch('/managed-goals',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(r.status);return r.json();})]);managed=goalsResult.status==='fulfilled'?goalsResult.value:{available:false,message:'Managed goal connection unavailable'};if(stateResult.status!=='fulfilled')throw Error('status');render(stateResult.value);}catch{put('status','Display disconnected');document.getElementById('status').classList.add('bad');}setTimeout(poll,500)}poll();
+</script></html>

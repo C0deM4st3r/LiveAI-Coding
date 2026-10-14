@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One AI. Every Pokémon Game. — Activity feed</title>
+<style>
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{background:transparent;color:#edf5ff;font-family:Segoe UI,Arial,sans-serif}
+.panel{height:100%;width:100%;padding:14px 16px;display:flex;flex-direction:column;gap:8px;background:rgba(10,17,28,.96);border:1px solid #304457;border-radius:18px}
+.brand{display:flex;align-items:center;justify-content:space-between;color:#9ab5cc;font-size:13px;font-weight:700;letter-spacing:1.2px;gap:8px;flex-shrink:0}
+.brand strong{color:#73e5b5;font-size:11px;letter-spacing:.7px}
+.statusline{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;color:#9cb4c9;flex-shrink:0}#status{color:#83e9bf;font-weight:650}.bad{color:#ffd094!important}
+#source{font-size:11px;color:#93adc4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+.top-row{display:grid;grid-template-columns:minmax(202px,.55fr) minmax(0,1.45fr);gap:8px;flex-shrink:0;height:clamp(240px,33vh,370px);min-height:240px}
+.controller{padding:8px 10px;background:#131f30;border:1px solid #2a3c50;border-radius:12px;min-width:0;display:flex;flex-direction:column;gap:4px;justify-content:center}
+.controller-title{display:flex;justify-content:space-between;gap:6px;font-size:11px;color:#9bb3cb;letter-spacing:1px}.controller-title span:last-child{color:#79dfb9;letter-spacing:0;font-size:10px;max-width:55%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.shoulders{display:flex;justify-content:space-between}.key{display:flex;align-items:center;justify-content:center;background:#22374d;color:#d3e3f1;border:1px solid #49627b;border-radius:6px;font-weight:700}
+.shoulder{width:48px;height:18px;font-size:10px}.controls{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.pad{display:grid;grid-template-columns:28px 28px 28px;grid-template-rows:26px 26px;gap:3px;flex-shrink:0;margin:0 auto}.pad .key{font-size:16px}.key[data-key=up]{grid-column:2}.key[data-key=left]{grid-column:1;grid-row:2}.key[data-key=down]{grid-column:2;grid-row:2}.key[data-key=right]{grid-column:3;grid-row:2}
+.systemkeys{display:flex;flex-direction:column;gap:3px}.systemkeys .key{font-size:9px;padding:4px 5px;border-radius:9px}.facekeys{display:flex;flex-direction:column;gap:4px;align-items:center}.facekeys .key{width:30px;height:30px;border-radius:50%;font-size:13px}.facekeys .key[data-key=a]{margin:0}
+.key.unavailable{background:#172232;border-color:#2b394b;color:#617288;border-style:dashed}.key.selected{background:#78e4b9;color:#082b1d;border-color:#b9ffde;box-shadow:0 0 12px #63dba233}
+.availability{font-size:9px;color:#849bb0;text-align:center;line-height:1.2}
+.map-panel{padding:8px 10px;background:#131f30;border:1px solid #2a3c50;border-radius:12px;min-width:0;display:flex;flex-direction:column;gap:2px;min-height:0}
+.map-title{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:11px;color:#9bb3cb;letter-spacing:1px;font-weight:650}
+.map-title .map-status{color:#79dfb9;letter-spacing:0;font-weight:600;font-size:10px;text-transform:none}
+#map-summary,#map-legend,#map-entities,#map-graph,#map-route{font-size:12px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#map-summary{color:#84dcbc}#map-legend{color:#aec6d8;font-size:11px}#map-entities{color:#e8ca89}#map-graph{color:#96b6d8;font-size:11px}
+#map-legend{white-space:normal;flex-shrink:0}
+.map-canvas-box{flex:1;min-height:0;overflow:hidden;background:#0a1521;border-radius:7px;border:1px solid #243649}#world-map-canvas{display:block;width:100%;height:100%}
+.strip-row{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:8px;flex:1;min-height:0}
+.goals-strip,.story-area{display:flex;flex-direction:column;min-height:0;min-width:0;background:#131f30;border:1px solid #2a3c50;border-radius:12px;padding:8px 10px;gap:6px}
+.strip-heading{display:flex;justify-content:space-between;align-items:center;color:#9cb2c8;font-size:13px;letter-spacing:1.2px;font-weight:650;flex-shrink:0}
+#goal-count,#count{font-size:12px;color:#7e9bb3;letter-spacing:0}
+#goal-summary{font-size:13px;color:#a5bdd2;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#goals{list-style:none;padding:0;margin:0;overflow:hidden;min-height:0;flex:1}
+.goal{border-left:3px solid #41566c;padding:7px 9px;margin:0 0 6px;background:#172538;border-radius:0 7px 7px 0}
+.goal.active,.goal.ready{border-color:#80e4b9}.goal.complete,.goal.completed{border-color:#81b8f0}.goal.blocked,.goal.paused{border-color:#e5c38c}.goal.failed{border-color:#f3a4a4}.goal.emergency{background:#3a2730}
+.goal .title{font-size:17px;line-height:1.25;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow-wrap:anywhere}
+.goal small{display:block;color:#8fc9b0;font-size:12px;margin-bottom:2px}.goal-meta,.goal-detail{font-size:13px;line-height:1.3;margin-top:3px;color:#adc4d8;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1}
+.goal-detail{color:#e5c38c}.goal-proof{color:#80e4b9}.goal-tree .goal{margin-left:0}
+#story{overflow-y:auto;min-height:0;scrollbar-width:none;flex:1;mask-image:linear-gradient(to bottom,#000 0,#000 calc(100% - 12px),transparent 100%)}#story::-webkit-scrollbar{display:none}
+.entry{display:grid;grid-template-columns:40px minmax(0,1fr);gap:8px;padding:5px 0;border-bottom:1px solid #25354a;align-items:start}
+.badge{width:40px;min-height:36px;border-radius:7px;border:1px solid #3c576b;background:#1b2e41;color:#93d9f5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
+.badge b{font-size:18px;line-height:1}.badge span{font-size:9px;font-weight:700;letter-spacing:.2px}
+.entry.latest .badge{background:#183e35;color:#8ce9be;border-color:#4c9d82}
+.entry .meta{display:flex;justify-content:space-between;color:#7996ad;font-size:12px;font-weight:650;letter-spacing:.3px;margin-bottom:1px}
+.reason{font-size:17px;line-height:1.25;color:#e5eef6;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow-wrap:anywhere}
+.result{font-size:14px;line-height:1.25;color:#9bb3ca;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.result.blocked{color:#e6bd84}
+.empty{font-size:16px;line-height:1.4;color:#8ea8be;padding:12px 0}
+.footer{border-top:1px solid #304357;padding-top:7px;display:flex;justify-content:space-between;gap:8px;font-size:12px;color:#a4bfd5;flex-shrink:0}#outcome{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;min-width:0}#reward{flex-shrink:0}
+.entry-body{min-width:0}.entry.activity .badge{color:#b9c9ff}.entry[data-kind=memory] .badge{color:#eed098}.entry[data-kind=test] .badge{color:#a4e4bd}
+.evidence{font-size:11px;margin-top:2px;color:#a7c4df}.evidence summary{cursor:pointer}.evidence figure{display:flex;gap:6px;align-items:start;margin:3px 0;padding:4px;background:#101b29;border-radius:6px}.evidence a{flex:0 0 84px}.evidence img{display:block;width:84px;aspect-ratio:3/2;object-fit:contain;image-rendering:pixelated}.evidence figcaption{min-width:0;flex:1}.evidence figcaption p{margin:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.evidence small{color:#e8c38c;font-size:10px}.expired{font-size:10px;color:#8399af;margin-top:2px}
+@media(max-width:420px){.top-row,.strip-row{grid-template-columns:1fr}.top-row{height:auto;min-height:0}.map-canvas-box{min-height:180px}.strip-row{min-height:280px}}
+@media(min-width:700px){.top-row{height:clamp(260px,35vh,390px)}.reason{font-size:18px}.goal .title{font-size:18px}}
+</style>
+<main class="panel">
+ <div class="brand"><span>ONE AI · EVERY POKÉMON GAME</span><strong id="demo-label">PLAYER</strong></div>
+ <div class="statusline"><span id="status">Waiting for agent</span><span id="step">Step —</span></div>
+ <div id="source">Waiting for activity</div>
+ <div class="top-row">
+  <section class="controller" aria-label="Controller availability and selected or last action">
+   <div class="controller-title"><span>CONTROLLER</span><span id="button">No action yet</span></div>
+   <div class="shoulders"><div class="key shoulder" data-key="l">L</div><div class="key shoulder" data-key="r">R</div></div>
+   <div class="controls">
+    <div class="pad"><div class="key" data-key="up">↑</div><div class="key" data-key="left">←</div><div class="key" data-key="down">↓</div><div class="key" data-key="right">→</div></div>
+    <div class="systemkeys"><div class="key" data-key="select">SELECT</div><div class="key" data-key="start">START</div></div>
+    <div class="facekeys"><div class="key" data-key="b">B</div><div class="key" data-key="a">A</div></div>
+   </div>
+   <div class="availability">Dimmed unavailable · Highlight last</div>
+  </section>
+  <section class="map-panel" aria-label="Shared visual world model">
+   <div class="map-title"><span>DISCOVERED WORLD</span><span class="map-status" id="map-state">Awaiting observation</span></div>
+   <div id="map-summary">Position unknown · no invented coordinates</div>
+   <div class="map-canvas-box"><canvas id="world-map-canvas" role="img" aria-label="Local tile map and proposed path"></canvas></div>
+   <div id="map-legend">● Player · mint ▪ Walked · dim Candidate<br>Amber Frontier · purple Entrance · blue Route</div>
+   <div id="map-route">No selected route · waiting for controller</div>
+   <div id="map-entities">Verified / observed / inferred / external</div>
+   <div id="map-graph">Area graph awaits verified traversals</div>
+  </section>
+ </div>
+ <div class="strip-row">
+  <section class="goals-strip" aria-label="Dynamic goal tree">
+   <div class="strip-heading"><span id="goal-heading">GOALS</span><span id="goal-count"></span></div>
+   <div id="goal-summary">Waiting for persisted objectives</div>
+   <ol id="goals"><li class="empty">Waiting for the first goal</li></ol>
+  </section>
+  <section class="story-area"><div class="strip-heading"><span>ACTIVITY FEED</span><span id="count">Waiting for events</span></div><div id="story" role="log" aria-label="Activity feed, newest first"><div class="empty">Buttons, Qwen calls, memory and checks will appear here.</div></div></section>
+ </div>
+ <div class="footer"><span id="mode">Setup</span><span id="outcome">Waiting for agent</span><span id="reward">Reward —</span></div>
+</main>
+<script>
+const symbols={up:'↑',down:'↓',left:'←',right:'→',a:'A',b:'B',l:'L',r:'R',start:'▶',select:'≡',test:'✓'};
+const categories={qwen:['✦','QWEN'],memory:['↻','MEM'],system:['•','SYS'],vision:['◎','VIEW'],learning:['+','LEARN'],recovery:['↪','FIX'],test:['✓','TEST']};
+const demo=new URLSearchParams(location.search).get('demo')==='1';
+const put=(id,text)=>document.getElementById(id).textContent=text;
+const element=(tag,cls,text)=>{const e=document.createElement(tag);e.className=cls;e.textContent=text;return e;};
+let storySignature='',goalSignature='',captureHistory=[],managed=null,latestState=null;
+const followLatest=()=>{const story=document.getElementById('story');story.scrollTop=0;};
+const goalsBox=document.getElementById('goals');
+new ResizeObserver(followLatest).observe(document.getElementById('story'));
+function renderGoals(s){
+ const useManager=!demo&&managed?.available&&managed.total>0;
+ const hybrid=useManager&&managed.hybrid?.main_goal;
+ let all=useManager?managed.goals:(s.goals?.length?s.goals:[{id:'current',title:s.goal||'Waiting',status:s.active?'active':'waiting'}]);
+ if(hybrid){
+  all=managed.hybrid.session_goals||managed.hybrid.display_goals||managed.hybrid.goals;
+ }
+ all=all.filter(g=>g.status!=='cancelled');
+ goalsBox.classList.toggle('goal-tree',Boolean(hybrid));
+ const capacity=Math.min(5,Math.max(1,Math.floor(goalsBox.clientHeight/142)));
+ const goals=all.slice(0,capacity);
+ const signature=JSON.stringify([goals,capacity,useManager,managed?.total,managed?.counts,managed?.queue]);
+ if(signature===goalSignature)return;goalSignature=signature;goalsBox.replaceChildren();
+ put('goal-heading',hybrid?'MAJOR GOAL + SUBGOALS':useManager?'MANAGED GOALS':'PLAYER GOALS');
+ const total=hybrid?(managed.hybrid.session_goal_total??all.length):useManager?managed.total:all.length;put('goal-count',total?goals.length+' / '+total:'');
+ const counts=hybrid?all.reduce((out,g)=>({...out,[g.status]:(out[g.status]||0)+1}),{}):managed?.counts;
+ const next=managed?.queue?.requests?.[0];
+ put('goal-summary',next?'NEXT: '+next.text+' · '+next.state.toUpperCase():useManager?Object.entries(counts||{}).filter(([,n])=>n).map(([status,n])=>n+' '+status).join(' · '):'Player task list');
+ if(!goals.length){goalsBox.append(element('li','empty','Waiting for the first goal'));return;}
+ goals.forEach((g,i)=>{
+  const row=element('li','goal '+(g.status||'')+(g.emergency?' emergency':''),'');
+  if(hybrid)row.style.marginLeft=Math.min(g.depth||0,3)*10+'px';
+  row.append(element('small','',String(i+1).padStart(2,'0')+' · '+(g.session_role?g.session_role.toUpperCase()+' · ':'')+(g.group_count?'LATEST ':'')+String(g.status||'active').toUpperCase()+(g.emergency?' · EMERGENCY':'')),element('div','title',g.title));
+  if(useManager){
+   row.append(element('div','goal-meta',(g.source||'').replaceAll('_',' ')+' · P'+g.priority+' · '+(g.group_count?g.group_count+' checkpoints':g.attempts+'/'+(g.retry_limit+1))+(g.target?.completion?' · '+g.target.completion.condition.rule.replaceAll('_',' '):'')));
+   const detail=g.blockers?.[0]||g.progress_summary||(g.status==='completed'?(g.evidence_count||0)+' proofs':'');
+   if(detail)row.append(element('div','goal-detail'+(g.status==='completed'?' goal-proof':''),detail));
+  }
+  goalsBox.append(row);
+ });
+}
+new ResizeObserver(()=>{if(latestState)renderGoals(latestState);}).observe(goalsBox);
+function renderStory(entries){
+ const signature=JSON.stringify([entries,captureHistory]);if(signature===storySignature)return;storySignature=signature;
+ const collapsed=new Set(Array.from(document.querySelectorAll('.evidence:not([open])')).map(e=>e.dataset.entryId));
+ const story=document.getElementById('story');story.replaceChildren();
+ if(!entries.length){story.append(element('div','empty','Start an experiment to see buttons, Qwen calls, memory and checks.'));return;}
+ [...entries].reverse().forEach((entry,index)=>{
+  const kind=entry.kind||(entry.button==='test'?'test':'action');
+  const row=element('article','entry'+(kind!=='action'?' activity':'')+(index===0?' latest':''),'');row.dataset.kind=kind;
+  const key=entry.button||'',category=categories[kind]||['•',kind.toUpperCase()];
+  const badge=element('div','badge','');badge.append(element('b','',kind==='action'?(symbols[key]||key.toUpperCase()):category[0]),element('span','',kind==='action'?key.toUpperCase():category[1]));
+  const body=element('div','entry-body',''),meta=element('div','meta','');
+  const time=entry.timestamp?new Date(entry.timestamp).toLocaleTimeString('en-GB',{hour12:false}):'';
+  const identity=kind==='action'?'STEP '+entry.step:kind==='test'?'CHECK '+entry.step:'EVENT '+(entry.sequence||'—');
+  const origin=/^(CHECK|REPLAY|LIVE|PLAYER)\b/.exec(entry.source||'')?.[1]||'';
+  const detail=entry.hypothesis?'HYPOTHESIS':typeof entry.reward==='number'?'R '+entry.reward.toFixed(1):kind==='action'?identity:'';
+  meta.append(element('span','',(index===0?'LATEST · ':'')+(time||identity)),element('span','',[origin,detail].filter(Boolean).join(' · ')));
+  body.append(meta,element('div','reason',entry.decision),element('div','result'+(entry.blocked?' blocked':''),(entry.blocked&&!entry.outcome.startsWith('Likely blocked')?'Likely blocked · ':'')+entry.outcome.replaceAll('_',' ')));
+  body.lastElementChild.title=entry.outcome;row.title=entry.source||'';
+  if(entry.call_id){
+   const capture=captureHistory.find(c=>c.id===entry.call_id);
+   if(capture){
+    const details=element('details','evidence','');details.dataset.callId=capture.id;details.dataset.entryId=capture.id+':'+entry.sequence;details.open=!collapsed.has(details.dataset.entryId);
+    details.append(element('summary','','Call screenshot · '+capture.status+(capture.stale?' · earlier view':'')));
+    const figure=document.createElement('figure'),image=document.createElement('img');image.alt='Source image for this Qwen call';image.loading='lazy';image.src='/qwen-image/'+encodeURIComponent(capture.id)+'.png';
+    image.onerror=()=>{image.remove();figure.prepend(element('small','','Image unavailable · response retained'));};
+    const caption=document.createElement('figcaption');
+    ['Asked: '+capture.trigger,'Reply: '+capture.response].forEach(line=>{const p=element('p','',line);p.title=line;caption.append(p);});
+    caption.append(element('small','',capture.source+(capture.latency!=null?' · '+capture.latency.toFixed(1)+'s':'')+' · Model hypothesis'));
+    const full=document.createElement('a');full.href=image.src;full.target='_blank';full.rel='noopener';full.title='Open full source screenshot';full.append(image);
+    figure.append(full,caption);details.append(figure);body.append(details);
+   }else body.append(element('div','expired','Image outside the last 10 calls · text retained'));
+  }
+  row.append(badge,body);story.append(row);
+ });
+ followLatest();
+}
+function render(s){
+ latestState=s;
+ const stale=s.active&&(!s.timestamp||Date.now()-Date.parse(s.timestamp)>10000);
+ put('status',demo?'Preview · no game input':stale?'No recent agent events':s.status);
+ put('demo-label',demo?'DEMO':'ACTIVITY');document.getElementById('status').classList.toggle('bad',Boolean(stale||demo));put('source',demo?'DEMO · sample events · no game input':s.source||'Recorded agent events');
+ put('button',s.button?s.button.toUpperCase():'—');
+ const available=s.available_buttons||['up','down','left','right'];
+ document.querySelectorAll('.key').forEach(k=>{const enabled=available.includes(k.dataset.key);k.classList.toggle('unavailable',!enabled);k.classList.toggle('selected',enabled&&!stale&&k.dataset.key===s.button);k.setAttribute('aria-label',k.dataset.key+(enabled?' available':' unavailable'));});
+ const entries=s.story||[];renderStory(entries);put('count',entries.length?String(entries.length):'');
+ renderGoals(s);
+ put('mode',s.mode+(s.episode!=='—'?' · Ep '+Number(s.episode):''));put('step',s.budget_label==='observations'?(s.qwen_calls||0)+' calls · '+(s.cache_hits||0)+' hits':(s.budget_label==='checks'?'Check ':'Step ')+s.step+(s.limit?' / '+s.limit:''));
+ put('outcome',s.outcome.replaceAll('_',' '));put('reward',typeof s.reward==='number'?'Reward '+s.reward.toFixed(2):'Reward —');
+}
+let tick=0;
+const examples=[
+ {button:'up',decision:'Explore a new direction.',outcome:'View changed; memory updated'},
+ {button:'right',decision:'Continue a short probe.',outcome:'View changed; memory updated'},
+ {button:'right',decision:'Try right again; one press may only turn.',outcome:'View unchanged',blocked:true},
+ {button:'up',decision:'Try another direction after the blockage.',outcome:'View changed; memory updated'},
+ {button:'left',decision:'Select the highest learned action value.',outcome:'Downstairs landmarks confirmed',reward:100}
+];
+async function poll(){
+ if(demo){const i=Math.floor(tick++/6)%examples.length;
+  managed=null;
+  render({goal:'Reach downstairs',status:'Running',mode:'Demo',episode:'001',step:i+1,limit:40,button:examples[i].button,
+   story:examples.slice(0,i+1).map((e,n)=>({step:n+1,reward:null,blocked:false,...e})),outcome:'Sample events',reward:examples[i].reward??null,active:true,timestamp:new Date().toISOString()});
+ }else{try{const [response,evidence,goals]=await Promise.all([fetch('/status',{cache:'no-store'}),fetch('/qwen-history',{cache:'no-store'}).catch(()=>null),fetch('/managed-goals',{cache:'no-store'}).catch(()=>null)]);if(!response.ok)throw Error(response.status);if(evidence?.ok)captureHistory=await evidence.json();managed=goals?.ok?await goals.json():{available:false};render(await response.json());}
+  catch{put('status','Overlay disconnected');document.getElementById('status').classList.add('bad');document.querySelectorAll('.key').forEach(k=>k.classList.remove('selected'));}}
+ setTimeout(poll,250);
+}
+poll();
+</script>
+<script>
+const mapCanvas=document.getElementById('world-map-canvas');let lastMap=null;
+const mapLabel=e=>({lab:'LAB',center:'CENTER',mart:'MART',npc:'NPC',door:'DOOR',stairs:'STAIRS',grass:'GRASS',sign:'SIGN',building:'HOUSE',pokemon:e.name?.toUpperCase()||'POKÉMON'}[e.kind]||e.kind.toUpperCase());
+function drawMap(m){
+ lastMap=m;const b=mapCanvas.getBoundingClientRect(),ratio=devicePixelRatio||1;mapCanvas.width=Math.max(1,Math.floor(b.width*ratio));mapCanvas.height=Math.max(1,Math.floor(b.height*ratio));const c=mapCanvas.getContext('2d');c.setTransform(ratio,0,0,ratio,0,0);c.clearRect(0,0,b.width,b.height);
+ if(!m?.available||!m.area){c.fillStyle='#9fb6ca';c.font='13px Segoe UI';c.fillText(demo?'Demo · map awaits live memory':'No current localized area',10,22);return;}
+ const p=m.state?.player,tiles=m.tiles||[],bounds=m.bounds||{},minX=bounds.min_x??p?.[0]??0,maxX=bounds.max_x??minX,minY=bounds.min_y??p?.[1]??0,maxY=bounds.max_y??minY,cols=Math.min(65,Math.max(19,maxX-minX+5)),rows=Math.min(45,Math.max(15,maxY-minY+5)),cx=maxX-minX+5<=65?Math.round((minX+maxX)/2):p?.[0]??0,cy=maxY-minY+5<=45?Math.round((minY+maxY)/2):p?.[1]??0,size=Math.min(b.width/cols,b.height/rows),ox=(b.width-cols*size)/2,oy=(b.height-rows*size)/2;
+ const xy=(x,y)=>[ox+(x-cx+Math.floor(cols/2))*size,oy+(y-cy+Math.floor(rows/2))*size];
+ c.fillStyle='#172534';c.fillRect(ox,oy,cols*size,rows*size);c.strokeStyle='#26394a';c.lineWidth=.4;
+ for(let y=0;y<rows;y++)for(let x=0;x<cols;x++)c.strokeRect(ox+x*size,oy+y*size,size,size);
+ for(const t of tiles){const [x,y]=xy(t.x,t.y);if(x<ox-size||y<oy-size||x>ox+cols*size||y>oy+rows*size)continue;c.fillStyle=t.state==='BLOCKED'?'#963e53':t.state==='LIKELY_BLOCKED'?'#a98539':t.state==='WALKABLE'?(t.visits?'#387d69':'#275b52'):t.terrain==='floor_candidate'?'#263638':t.terrain==='obstacle_candidate'?'#3a2c2a':t.terrain==='sprite_candidate'?'#4a3d28':'#172534';c.fillRect(x+.5,y+.5,size-1,size-1);}
+ c.strokeStyle='#daba6d';c.lineWidth=1.2;for(const f of m.frontiers||[]){const [x,y]=xy(...f);c.strokeRect(x+2,y+2,size-4,size-4);}
+ const path=m.path||[],unknown=new Set((m.path_unknown||[]).map(p=>p.join(',')));c.lineWidth=2.2;
+ for(let i=1;i<path.length;i++){const a=xy(...path[i-1]),z=xy(...path[i]),proposed=m.path_selected===false||unknown.has(path[i].join(','))||unknown.has(path[i-1].join(','));c.strokeStyle=proposed?'#eac06e':'#88c4ff';c.setLineDash(proposed?[4,3]:[]);c.beginPath();c.moveTo(a[0]+size/2,a[1]+size/2);c.lineTo(z[0]+size/2,z[1]+size/2);c.stroke();}c.setLineDash([]);
+ c.font=Math.max(9,Math.min(13,size*.55))+'px Segoe UI';for(const e of m.entities||[]){if(!e.position)continue;const [x,y]=xy(...e.position);if(x<ox||y<oy||x>ox+cols*size||y>oy+rows*size)continue;c.fillStyle=e.status==='VERIFIED'?'#b4f4dc':e.status==='DISPROVEN'?'#687687':e.status==='EXTERNAL'?'#aab5ec':'#e2bc79';c.fillText((e.status==='INFERRED'?'?':'')+(size<12?mapLabel(e).slice(0,2):mapLabel(e)),x,y+size*.7);}
+ for(const portal of m.portals||[]){if(!portal.position)continue;const [x,y]=xy(...portal.position);if(x<ox||y<oy||x>ox+cols*size||y>oy+rows*size)continue;c.strokeStyle='#d7a5ff';c.lineWidth=2;c.strokeRect(x+size*.2,y+size*.2,size*.6,size*.6);}
+ // Durable walking marker is separate from temporary frontier/path overlays.
+ c.fillStyle='#91f4c4';for(const t of tiles){if(t.state!=='WALKABLE'||!t.visits)continue;const [x,y]=xy(t.x,t.y);if(x<ox||y<oy||x>=ox+cols*size||y>=oy+rows*size)continue;const mark=Math.max(1.5,Math.min(3,size*.24));c.fillRect(x+size*.12,y+size*.72,mark,mark);}
+ if(p){const [x,y]=xy(...p);c.fillStyle='#fff';c.beginPath();c.arc(x+size/2,y+size/2,Math.max(3.5,size*.26),0,Math.PI*2);c.fill();}else{c.fillStyle='#e8bd7f';c.font='12px Segoe UI';c.fillText('PLAYER UNKNOWN · remembered map',ox+8,oy+16);}
+ mapCanvas.setAttribute('aria-label',m.area.label+' · '+tiles.filter(t=>t.visits).length+' explored tiles · '+(p?'player '+p.join(','):'player uncertain'));
+}
+function renderMap(m){
+ put('map-route',(m.path_status||'No selected route')+(m.path_selected?' · '+Math.max(0,(m.path||[]).length-1)+' steps · '+(m.path_unknown||[]).length+' candidate probes':' · see current action')+' · dashed = uncertain');
+ const state=m.state||{},p=state.player;put('map-state',m.available?'Shared memory':'Waiting');
+ put('map-summary',(m.area?.label||'Area unknown')+' · '+(p?'local ['+p.join(',')+']':m.pose?.status==='partial'?'partial step · tile pending':'position unknown · input held')+' · '+Math.round((state.confidence||0)*100)+' tracking score');
+ const entities=(m.entities||[]).slice(0,3).map(e=>mapLabel(e)+' '+e.status+(e.current_seen?'':' · history'));
+ if(m.external_knowledge?.length)entities.push(mapLabel(m.external_knowledge[0])+' EXTERNAL');
+ put('map-entities',entities.join(' / ')||'Semantic landmarks await observations');
+ const verified=(m.edges||[]).filter(e=>e.status==='VERIFIED'),links=verified.filter(e=>e.source===m.area?.id).slice(0,2).map(e=>(m.areas||[]).find(a=>a.id===e.destination)?.label||'Known area');
+ const encounters=(m.encounters||[]).filter(e=>e.area===m.area?.id&&e.status!=='EXTERNAL').map(e=>e.name+' ×'+e.count);
+ put('map-graph',(m.arrival?'Entry from '+m.arrival.source_label+(m.arrival.position?'':' · tile uncertain')+' · ':'')+(m.tile_count??m.tiles?.length??0)+' cells'+(m.tiles_truncated?' · view bounded':'')+' · '+verified.length+' transitions'+(links.length?' → '+links.join(' / '):'')+(encounters.length?' · '+encounters.join(' / '):''));drawMap(m);
+}
+new ResizeObserver(()=>{if(lastMap)drawMap(lastMap)}).observe(mapCanvas.parentElement);
+async function pollMap(){try{const r=await fetch('/world-map',{cache:'no-store'});if(!r.ok)throw Error();renderMap(await r.json());}catch{put('map-state','Map disconnected');}setTimeout(pollMap,750)}pollMap();
+</script>
+</html>

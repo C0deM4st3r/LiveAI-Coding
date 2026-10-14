@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One AI · The road to Brock</title>
+<style>
+:root{color-scheme:dark;--bg:#080f19;--panel:#101c2b;--line:#30465b;--text:#edf5ff;--muted:#a1b7cb;--mint:#80e4b9;--blue:#9ac9ff;--amber:#f1c484;--violet:#c5b2f3}
+*{box-sizing:border-box}[hidden]{display:none!important}html,body{width:100%;height:100%;margin:0;overflow:hidden}body{background:var(--bg);color:var(--text);font-family:"Segoe UI",Arial,sans-serif}button,select{font:inherit}button:focus-visible,select:focus-visible{outline:3px solid var(--mint);outline-offset:4px}
+#stage{width:1920px;height:1080px;position:absolute;left:50%;top:50%;transform-origin:center;display:flex;flex-direction:column;padding:36px 42px;gap:18px;background:radial-gradient(ellipse at 85% 0%,#14263a 0,transparent 47%),var(--bg)}
+header{height:80px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:28px}.eyebrow{font-size:17px;font-weight:700;letter-spacing:2.6px;color:var(--mint);margin-bottom:7px}h1{font-size:40px;line-height:1.1;letter-spacing:-.7px;margin:0}.readiness{border:1px solid #66503a;background:#2b241d;border-radius:12px;padding:14px 20px;min-width:374px}.readiness span{display:block;font-size:14px;letter-spacing:1.4px;color:var(--amber);font-weight:700}.readiness strong{display:block;font-size:24px;margin-top:3px}
+.toolbar{height:44px;display:flex;justify-content:space-between;align-items:center;gap:28px;flex-shrink:0}.tabs{display:flex;gap:10px}.tabs button,select{background:#142337;border:1px solid var(--line);color:var(--muted);border-radius:8px;font-size:19px;padding:8px 16px;cursor:pointer}.tabs button[aria-selected="true"]{color:var(--bg);border-color:var(--mint);background:var(--mint);font-weight:700}.controls{display:flex;gap:14px;align-items:center;color:var(--muted);font-size:17px}.controls select{min-width:355px;padding:7px 12px}.static-view{display:none;color:var(--blue);font-size:20px;font-weight:600}.legend{display:flex;align-items:center;gap:24px;font-size:17px;color:var(--muted)}.legend span{display:flex;align-items:center;gap:9px}.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}.legend .reuse{background:var(--mint)}.legend .partial{background:var(--blue)}.legend .gap{background:var(--amber)}
+main{flex:1;min-height:0}.view{height:100%;display:none;flex-direction:column}.view.active{display:flex}.intro{height:66px;flex-shrink:0;display:flex;justify-content:space-between;align-items:flex-start;gap:24px}.intro h2{font-size:26px;margin:0 0 5px;font-weight:650}.intro p{color:var(--muted);font-size:20px;line-height:1.35;margin:0}.contract{color:var(--violet);background:#211d32;border:1px solid #4a3d68;border-radius:8px;padding:10px 13px;white-space:nowrap;font-size:18px;max-width:600px}
+.diagram{position:relative;width:1836px;height:656px;flex-shrink:0}.links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}.links path{fill:none;stroke:#527b9b;stroke-width:2.6}.links .feedback{stroke:#91adcb;stroke-dasharray:7 6}.links text{fill:#bad0e3;font-size:17px;font-family:"Segoe UI",Arial,sans-serif}.node{position:absolute;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;display:flex;flex-direction:column;overflow:hidden;transition:opacity .15s,border-color .15s}.node.top,.node.bottom{width:588px;padding:14px 18px}.node.top{top:0;height:166px}.node.bottom{top:502px;height:154px}.node.top h3,.node.bottom h3{font-size:25px;margin:6px 0}.node.top p,.node.bottom p{font-size:19px;line-height:1.25}.node.top .lab,.node.bottom .lab{font-size:15px;padding-top:6px}.node.core{width:276px;height:206px;top:232px;padding:18px}.node:nth-of-type(1){left:0}.node .node-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:15px;letter-spacing:.5px;font-weight:650;color:var(--blue)}.node h3{font-size:27px;line-height:1.15;margin:9px 0 7px;font-weight:650}.node p{font-size:20px;line-height:1.32;margin:0;color:#bfd0df}.node .lab{font-size:16px;color:var(--muted);margin-top:auto;padding-top:9px}.node .lab strong{font-weight:600;color:var(--blue)}.node.planned .lab strong,.node.planned .node-meta{color:var(--amber)}.node.reused .lab strong,.node.reused .node-meta{color:var(--mint)}.node.bottom h3{margin-top:6px}.node.bottom p{font-size:19px}.node.core h3{font-size:26px}.node.core p{font-size:19px}.node.core .lab{font-size:15px}.node.selected,.road-card.selected{border:2px solid var(--mint);box-shadow:0 0 0 4px #80e4b916;padding-left:19px}.node.core.selected{padding-left:17px}.dimmed{opacity:.38}.diagram-note{display:flex;justify-content:space-between;gap:24px;padding-top:17px;font-size:18px;color:var(--muted)}.diagram-note strong{color:var(--mint);font-weight:600}
+.roadmap-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:15px;flex:1;min-height:0}.road-card{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;min-width:0;transition:opacity .15s,border-color .15s}.road-top{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:8px}.stage-id{font-size:22px;font-weight:750;letter-spacing:1px;color:var(--text)}.badge{font-size:13px;font-weight:750;letter-spacing:.8px;border-radius:5px;padding:5px 7px;white-space:nowrap}.badge.reuse{background:#173b33;color:var(--mint)}.badge.partial{background:#1b334d;color:var(--blue)}.badge.gap{background:#3c2f22;color:var(--amber)}.road-card h3{font-size:24px;line-height:1.15;margin:0 0 8px;letter-spacing:-.25px}.road-card p{font-size:18px;line-height:1.25;color:#bed0e0;margin:0}.road-card .gate{font-size:17px;line-height:1.25;margin-top:auto;padding-top:9px;color:var(--muted)}.road-card .gate b{color:var(--mint);font-weight:650}.road-card.finish{background:#13292a;border-color:#365c56}.road-card.finish h3{color:var(--mint);font-size:26px}.finish .road-top{color:var(--mint);font-size:17px;letter-spacing:1px;font-weight:700}.finish p{font-size:20px}.finish .gate{font-size:17px}
+footer{height:52px;flex-shrink:0;border-top:1px solid var(--line);padding-top:15px;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;font-size:18px;color:var(--muted)}footer strong{color:var(--text);font-weight:600}.selection-label{max-width:950px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.footer-note{text-align:right}.clean .operator{display:none}.clean .static-view{display:block}.clean .toolbar{justify-content:space-between}@media(prefers-reduced-motion:reduce){.node,.road-card{transition:none}}@media print{body{width:1920px;height:1080px}#stage{position:static;transform:none!important}.operator{display:none!important}.static-view{display:block}.view.active{display:flex}*{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+.playable-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:15px;flex:1;min-height:0}.play-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;display:flex;flex-direction:column;min-width:0}.play-card h3{font-size:26px;line-height:1.1;margin:0 0 7px}.play-card .build{font-size:20px;font-weight:600;color:var(--blue);margin-bottom:7px}.play-card .detail{font-size:18px;line-height:1.25;color:#bed0e0;margin:0}.play-card .gate{font-size:18px;line-height:1.25;color:var(--muted);padding-top:8px;margin-top:auto}.play-card .gate b{color:var(--mint)}.play-card.selected{border:2px solid var(--mint);box-shadow:0 0 0 4px #80e4b916}.play-card.optional{border-color:#685236}.play-card.finish{background:#13292a;border-color:#365c56}.play-card.finish h3{color:var(--mint)}.play-card.finish .detail{font-size:20px;line-height:1.3}.play-card .road-top{margin-bottom:8px}.play-card .badge{font-size:12px}
+</style>
+</head>
+<body>
+<div id="stage">
+ <header>
+  <div><div class="eyebrow">ONE AI. EVERY POKÉMON GAME.</div><h1>The road to an autonomous Brock win</h1></div>
+  <div class="readiness"><span>BUILD TARGET · PUBLIC STARTER</span><strong>Brock release gate pending</strong></div>
+ </header>
+ <div class="toolbar">
+  <div class="tabs operator" role="tablist" aria-label="Architecture presentation">
+   <button id="tab-architecture" type="button" role="tab" aria-selected="true" aria-controls="architecture">Architecture</button>
+   <button id="tab-parts" type="button" role="tab" aria-selected="false" aria-controls="parts">Parts</button>
+   <button id="tab-roadmap" type="button" role="tab" aria-selected="false" aria-controls="roadmap">Playable checkpoints</button>
+  </div>
+  <div class="static-view" id="static-view">TARGET ARCHITECTURE</div>
+  <div class="legend" id="readiness-legend" aria-label="Starter contents and future implementation"><span><i class="reuse"></i>Included panels</span><span><i class="partial"></i>Kit + build</span><span><i class="gap"></i>To build</span></div>
+  <div class="legend" id="sequence-legend" aria-label="Build checkpoint types" hidden><span><i class="reuse"></i>Playable gate</span><span><i class="partial"></i>Supporting build</span><span><i class="gap"></i>Optional branch</span></div>
+  <label class="controls operator">Focus <select id="focus" aria-label="Highlight a build stage"><option value="">All stages</option></select></label>
+ </div>
+ <main>
+  <section class="view active" id="architecture" role="tabpanel" aria-labelledby="tab-architecture">
+   <div class="intro"><div><h2>One major goal. A closed loop of actions and evidence.</h2><p>Solid arrows: runtime flow. Dashed arrow: the next native observation.</p></div><div class="contract" data-stage="B00">B00 · Shared contracts + game profiles</div></div>
+   <div class="diagram" role="group" aria-label="Target architecture to build from the public starter; only presentation is included. Goal proposals flow through the registry and evidence verifier. Native screenshots become world state; navigation chooses bounded tools; Lua drives the game and the next screenshot. Shared memory, learning and presentation support the loop.">
+    <svg class="links" viewBox="0 0 1836 656" aria-hidden="true">
+     <defs><marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:#7da6c6;stroke:none"/></marker></defs>
+     <path d="M588 71H624" marker-end="url(#arrow)"/>
+     <path d="M1248 71H1212" marker-end="url(#arrow)"/>
+     <path d="M918 166V201H1074V232" marker-end="url(#arrow)"/><text x="930" y="188">validated task</text>
+     <path d="M1386 232V201H1542V166" marker-end="url(#arrow)"/><text x="1555" y="206">fresh native evidence</text>
+     <path d="M276 335H312" marker-end="url(#arrow)"/>
+     <path d="M588 335H624" marker-end="url(#arrow)"/>
+     <path d="M900 335H936" marker-end="url(#arrow)"/>
+     <path d="M1212 335H1248" marker-end="url(#arrow)"/>
+     <path d="M1524 335H1560" marker-end="url(#arrow)"/>
+     <path class="feedback" d="M1698 438V477H138V438" marker-end="url(#arrow)"/>
+     <rect x="687" y="461" width="462" height="30" rx="9" fill="#080f19"/><text x="918" y="482" text-anchor="middle">Observe the result before the next decision</text>
+    </svg>
+    <article class="node top planned" data-stages="B14 B15" style="left:0"><div class="node-meta"><span>B14 · B15</span><span>STRATEGY</span></div><h3>Director + campaign progression</h3><p>Choose executable steps; adapt from outcomes.</p><div class="lab"><strong>To build</strong> · general director and grounded progression</div></article>
+    <article class="node top planned" data-stages="B06" style="left:624px"><div class="node-meta"><span>B06</span><span>CONTROL</span></div><h3>Goals + registry + one executor</h3><p>Dependencies, priorities, capabilities and safe handoffs.</p><div class="lab"><strong>To build</strong> · persistent goals, queue and registered tools</div></article>
+    <article class="node top planned" data-stages="B06 B16" style="left:1248px"><div class="node-meta"><span>B06 · B16</span><span>PROOF</span></div><h3>Independent completion verifier</h3><p>Native receipts complete goals. A model claim never does.</p><div class="lab"><strong>To build</strong> · reusable evidence rules and Brock win proof</div></article>
+
+    <article class="node core planned" data-stages="B01" style="left:0"><div class="node-meta"><span>B01</span><span>01</span></div><h3>Native capture</h3><p>Fresh screenshot<br>Released controls<br>Capture identity</p><div class="lab"><strong>To build</strong> · mGBA bridge</div></article>
+    <article class="node core planned" data-stages="B02 B13" style="left:312px"><div class="node-meta"><span>B02 · B13</span><span>02</span></div><h3>Perception</h3><p>OpenCV + UI cues<br>Selective vision<br>Confidence + context</p><div class="lab"><strong>To build</strong> · measured cues</div></article>
+    <article class="node core planned" data-stages="B03" style="left:624px"><div class="node-meta"><span>B03</span><span>03</span></div><h3>Shared world</h3><p>Pose, tiles + passages<br>Connected references<br>Recover before moving</p><div class="lab"><strong>To build</strong> · persistent geometry</div></article>
+    <article class="node core planned" data-stages="B04 B06" style="left:936px"><div class="node-meta"><span>B04 · B06</span><span>04</span></div><h3>Navigate + act</h3><p>A* + committed route<br>Measured short strides<br>One bounded tool call</p><div class="lab"><strong>To build</strong> · grounded routes</div></article>
+    <article class="node core planned" data-stages="B07 B08 B09 B10 B12" style="left:1248px"><div class="node-meta"><span>B07–B12</span><span>05</span></div><h3>Gameplay tools</h3><p>UI, party + NPC<br>Bag, healing + battle<br>Capture when useful</p><div class="lab"><strong>To build</strong> · admitted profiles</div></article>
+    <article class="node core planned" data-stages="B01" style="left:1560px"><div class="node-meta"><span>B01</span><span>06</span></div><h3>Lua → game</h3><p>Bounded inputs<br>Measured outcomes<br>No game RAM reads</p><div class="lab"><strong>To build</strong> · native controls</div></article>
+
+    <article class="node bottom planned" data-stages="B03 B08 B13" style="left:0"><div class="node-meta"><span>SHARED SQLITE</span><span>MEMORY</span></div><h3>World · team · facts · skills · history</h3><p>Shared SQLite with bounded, traceable references.</p><div class="lab"><strong>To build</strong> · stored experience with evidence and context</div></article>
+    <article class="node bottom planned" data-stages="B05 B11" style="left:624px"><div class="node-meta"><span>B05 · B11</span><span>LEARNING</span></div><h3>Learn decision policies</h3><p>Outcomes → policy update → frozen evaluation.</p><div class="lab"><strong>To build</strong> · movement skills and outcome-trained battles</div></article>
+    <article class="node bottom reused" data-stages="B01 B16" style="left:1248px"><div class="node-meta"><span>B01 · B16</span><span>OBSERVABILITY</span></div><h3>Stream panels + future controls</h3><p>Actions, reasons, proof and intervention counts.</p><div class="lab"><strong>Panels included</strong> · gameplay and operator adapter to build</div></article>
+   </div>
+   <div class="diagram-note"><span><strong>Learning changes decisions.</strong> Reliable controls, A* and proof checks remain trusted code.</span><span>B16 · Promote only a tested campaign release</span></div>
+  </section>
+  <section class="view" id="parts" role="tabpanel" aria-labelledby="tab-parts" hidden>
+   <div class="intro"><div><h2>The parts of the final agent. IDs are not the build order.</h2><p>Only the panels are included. Build and verify the remaining parts through Playable checkpoints.</p></div><div class="contract">One architecture · staged capabilities</div></div>
+   <div class="roadmap-grid" id="roadmap-grid" aria-label="Component catalog B00 through B16"></div>
+  </section>
+  <section class="view" id="roadmap" role="tabpanel" aria-labelledby="tab-roadmap" hidden>
+   <div class="intro"><div><h2>A visible result at every playable checkpoint.</h2><p>Build the supporting parts just before their first use. Gates below are targets, not completed runs.</p></div><div class="contract">LAB test → verified stage → STREAM</div></div>
+   <div id="playable-grid" class="playable-grid" aria-label="Dependency-ordered playable build checkpoints"></div>
+  </section>
+ </main>
+ <footer><div class="selection-label" id="selection-label"><strong>Target:</strong> one “Defeat Brock” goal → autonomous, verified completion.</div><div class="footer-note">Target plan · not live status · updated 2026-10-14</div></footer>
+</div>
+<script>
+"use strict";
+const STAGES = [
+ {id:"B00",name:"Contracts + profiles",status:"gap",description:"Versioned interfaces; game-specific adapters.",gate:"One shared contract; safe migration."},
+ {id:"B01",name:"Native I/O + stream",status:"partial",description:"Panels included; build mGBA and one controller.",gate:"Fresh capture; bounded input; visible feed."},
+ {id:"B02",name:"Visual perception",status:"gap",description:"UI, sprite, motion and stable visual states.",gate:"Cues measured; uncertainty preserved."},
+ {id:"B03",name:"World + recovery",status:"gap",description:"Shared maps, passages and connected views.",gate:"Recover the right chart and fresh pose."},
+ {id:"B04",name:"Navigation + motion",status:"gap",description:"A*, committed routes and safe movement.",gate:"Inputs follow the path; no blind turns."},
+ {id:"B05",name:"Learning + evaluation",status:"gap",description:"Train / Evaluate / Execute; versioned policies.",gate:"Frozen comparisons; real writes reported."},
+ {id:"B06",name:"Goals + tool executor",status:"gap",description:"Validated tasks, tools and native receipts.",gate:"Generic steps run under one owner."},
+ {id:"B07",name:"Cutscene + menu + party",status:"gap",description:"UI ownership, team memory and safe handback.",gate:"No movement or mapping during scripts."},
+ {id:"B08",name:"NPC + services",status:"gap",description:"Grounded approach, dialogue and useful facts.",gate:"Identity and interaction independently proved."},
+ {id:"B09",name:"Bag + healing",status:"gap",description:"Inventory, items, Centers and emergencies.",gate:"Verified recovery; interrupted goal resumes."},
+ {id:"B10",name:"General battle tools",status:"gap",description:"Moves, switching and wild/trainer outcomes.",gate:"Fresh legal actions; correct result + team."},
+ {id:"B11",name:"Battle learning",status:"gap",description:"Tactics from outcomes; controlled exploration.",gate:"Compare policy against a frozen baseline."},
+ {id:"B12",name:"Capture when useful",status:"gap",description:"Optional team expansion; native ball controls.",gate:"New team member proved; inventory reconciled."},
+ {id:"B13",name:"Vision + knowledge",status:"gap",description:"Selective vision and grounded game advice.",gate:"Cached context; hypotheses stay untrusted."},
+ {id:"B14",name:"General director",status:"gap",description:"A major goal becomes adaptive subgoals.",gate:"Replan and resume beyond fixed recipes."},
+ {id:"B15",name:"Travel + story",status:"gap",description:"Grounded routes, parcel and Gym progression.",gate:"Native place, item and story milestones."},
+ {id:"B16",name:"Brock + release",status:"gap",description:"Finish the campaign; promote a tested build.",gate:"Named win proof; repeatable held-out trials."}
+];
+const labels = {reuse:"INCLUDED",partial:"KIT + BUILD",gap:"TO BUILD"};
+const SLICES = [
+ {id:"B07a",name:"Script + dialogue ownership",gate:"Wait through scripts; regain a freshly localized world."},
+ {id:"B07b",name:"Menus + choices + party",gate:"Use supported interactions; verify the current team."},
+ {id:"B10a",name:"First admitted battle profile",gate:"Legal baseline actions; native result, team and world closure."},
+ {id:"B10b",name:"Broader early-game battle",gate:"Admit wild, switching and progression branches separately."}
+];
+const CHECKPOINTS = [
+ {id:"R0",name:"Screens first",stages:"B00 B01",build:"B00 → B01",type:"play",detail:"Contracts, then panels and native controls.",gate:"Fresh capture; bounded input; visible check feed."},
+ {id:"R1",name:"Walk and remember",stages:"B02 B03 B04",build:"B02 → B03 → B04",type:"play",detail:"Operator picks a grounded target or frontier.",gate:"Measured walking, A* and saved-map recovery."},
+ {id:"R2",name:"Handle Oak’s event",stages:"B07a",build:"B07a",type:"play",detail:"Wait during scripts; advance settled dialogue.",gate:"Fresh localized handback; unknown choices hold."},
+ {id:"R3",name:"Interact and inspect",stages:"B05 B06 B07b B08",build:"B05 → B06 → B07b → B08",type:"support",detail:"Modes + executor support interaction tools.",gate:"Human tool graph; choices and native party checks."},
+ {id:"R4",name:"One goal finds a starter",stages:"B13 B14",build:"B13 → B14",type:"play",detail:"Selective knowledge + the general director.",gate:"“Get the first Pokémon” ends with native proof."},
+ {id:"R5",name:"First battle",stages:"B10a",build:"B10a",type:"play",detail:"Same director; one admitted battle profile.",gate:"Legal baseline; verified outcome, team and return."},
+ {id:"R6",name:"Learn battle choices",stages:"B11",build:"B11",type:"support",detail:"Train a policy within the admitted profile.",gate:"Native outcomes + frozen comparison, not one win."},
+ {id:"R7",name:"Recover health",stages:"B09",build:"B09",type:"play",detail:"Bag, supported items and local healing service.",gate:"Fresh recovery proof; interrupted task resumes."},
+ {id:"R8",name:"Leave the starter area",stages:"B10b B15",build:"B10b → B15",type:"play",detail:"Broader combat, travel and parcel progression.",gate:"Verify each native branch before long routes."},
+ {id:"R9",name:"Optional new teammate",stages:"B12",build:"B12 · only if the strategy needs it",type:"optional",detail:"Supported wild capture; unknown branches hold.",gate:"New Pokémon and item use independently proved."},
+ {id:"R10",name:"Brock campaign",stages:"B16",build:"B16",type:"play",detail:"Admit every tool needed by the chosen strategy.",gate:"One macro; named win proof; release evaluation."}
+];
+const VIEWS=["architecture","parts","roadmap"];
+const params = new URLSearchParams(location.search);
+const requestedView=params.get("view")==="playable"?"roadmap":params.get("view");
+let view=VIEWS.includes(requestedView)?requestedView:"architecture";
+const requestedFocus=(params.get("stage")||"").replace(/^(B07|B10)([AB])$/,(_,base,slice)=>base+slice.toLowerCase());
+let focus=[...STAGES,...SLICES].some(stage=>stage.id===requestedFocus)?requestedFocus:"";
+if (params.get("clean") === "1") document.body.classList.add("clean");
+const select = document.getElementById("focus");
+const grid = document.getElementById("roadmap-grid");
+function make(tag, cls, text) {const node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node;}
+for (const item of STAGES) {
+ const option=make("option","",item.id+" · "+item.name);option.value=item.id;select.append(option);
+ const card=make("article","road-card");card.dataset.stages=item.id;card.setAttribute("aria-label",item.id+", "+item.name+", starter contents: "+labels[item.status]);
+ const top=make("div","road-top");top.append(make("span","stage-id",item.id),make("span","badge "+item.status,labels[item.status]));
+ const gate=make("div","gate");gate.append(make("b","","Gate: "),document.createTextNode(item.gate));
+ card.append(top,make("h3","",item.name),make("p","",item.description),gate);grid.append(card);
+}
+const finish=make("article","road-card finish");finish.append(make("div","road-top","RELEASE PRINCIPLE"),make("h3","","Test. Verify. Stream."),make("p","","Promote verified stages."),make("div","gate","Capture is optional. Measure actual improvement."));grid.append(finish);
+for(const item of SLICES){const option=make("option","",item.id+" · "+item.name);option.value=item.id;select.append(option);}
+for(const item of CHECKPOINTS){
+ const card=make("article","play-card"+(item.type==="optional"?" optional":""));card.dataset.stages=item.stages;
+ const top=make("div","road-top");top.append(make("span","stage-id",item.id),make("span","badge "+(item.type==="play"?"reuse":item.type==="support"?"partial":"gap"),item.type==="play"?"PLAYABLE GATE":item.type==="support"?(item.id==="R3"?"SUPPORT → PLAY":"LEARNING EXPERIMENT"):"OPTIONAL BRANCH"));
+ const gate=make("div","gate");gate.append(make("b","","See: "),document.createTextNode(item.gate));
+ card.append(top,make("h3","",item.name),make("div","build",item.build),make("p","detail",item.detail),gate);document.getElementById("playable-grid").append(card);
+}
+const sequenceNote=make("article","play-card finish");sequenceNote.append(make("div","road-top","FINAL INTERFACES, FROM THE START"),make("h3","","Build a little. Play a little."),make("p","detail","B IDs name components. R0–R10 is the playable sequence."),make("div","gate","Test supporting parts first. The operator starts each live gate; a plan is not a completed run."));document.getElementById("playable-grid").append(sequenceNote);
+function render() {
+ for(const name of VIEWS) {
+  const active=name===view;const panel=document.getElementById(name);panel.classList.toggle("active",active);panel.hidden=!active;
+  document.getElementById("tab-"+name).setAttribute("aria-selected",String(active));
+ }
+ select.value=focus;
+ document.getElementById("static-view").textContent=view==="roadmap"?"PLAYABLE BUILD ORDER":view==="parts"?"COMPONENT CATALOG":"TARGET ARCHITECTURE";
+ document.getElementById("readiness-legend").hidden=view==="roadmap";
+ document.getElementById("sequence-legend").hidden=view!=="roadmap";
+ for(const card of document.querySelectorAll("[data-stages]")) {
+  const selected=!!focus&&card.dataset.stages.split(" ").some(token=>token===focus||(focus.length===3&&token.slice(0,3)===focus)||(focus.length===4&&token===focus.slice(0,3)));
+  card.classList.toggle("selected",selected);card.classList.toggle("dimmed",!!focus&&!selected);
+ }
+ const contract=document.querySelector("[data-stage='B00']");contract.style.outline=focus==="B00"?"2px solid var(--mint)":"";
+ const label=document.getElementById("selection-label");label.replaceChildren();
+ const item=[...STAGES,...SLICES].find(stage=>stage.id===focus);
+ if(item) label.append(make("strong","",item.id+" · "+item.name+": "),document.createTextNode(item.gate));
+ else label.append(make("strong","","Target: "),document.createTextNode("one “Defeat Brock” goal → autonomous, verified completion."));
+}
+function setPresentation(nextView,nextFocus) {
+ view=nextView;focus=nextFocus;render();
+ const url=new URL(location.href);url.searchParams.set("view",view);if(focus)url.searchParams.set("stage",focus);else url.searchParams.delete("stage");
+ try{history.replaceState(null,"",url);}catch(_){/* A local-file OBS source still works without history permission. */}
+}
+document.getElementById("tab-architecture").addEventListener("click",()=>setPresentation("architecture",focus));
+document.getElementById("tab-parts").addEventListener("click",()=>setPresentation("parts",focus));
+document.getElementById("tab-roadmap").addEventListener("click",()=>setPresentation("roadmap",focus));
+select.addEventListener("change",()=>setPresentation(view,select.value));
+document.querySelector(".tabs").addEventListener("keydown",event=>{
+ if(event.key!=="ArrowLeft"&&event.key!=="ArrowRight")return;event.preventDefault();
+ const step=event.key==="ArrowRight"?1:-1;setPresentation(VIEWS[(VIEWS.indexOf(view)+step+VIEWS.length)%VIEWS.length],focus);document.getElementById("tab-"+view).focus();
+});
+function fit(){document.getElementById("stage").style.transform="translate(-50%, -50%) scale("+Math.min(innerWidth/1920,innerHeight/1080)+")";}
+addEventListener("resize",fit);render();fit();
+</script>
+</body>
+</html>
